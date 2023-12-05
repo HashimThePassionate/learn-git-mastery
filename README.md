@@ -1,4 +1,4 @@
-# Git_-_Github
+# Git and Github
 ## Introduction to Git and Github
 - We will explore Git all commands
 - We will integrate local repo to remote repo
