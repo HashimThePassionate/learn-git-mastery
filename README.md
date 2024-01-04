@@ -125,3 +125,8 @@ git clone https://github.com/<username>/<repository-name>.git
 ```python
  gh pr merge
 ```
+
+
+<a href="https://github.com/HashimThePassionate/Git_and_Github/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=HashimThePassionate/Git_and_Github" />
+</a>
