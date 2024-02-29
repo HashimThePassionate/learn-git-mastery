@@ -111,7 +111,10 @@ add .gitignore which ignore some files to that don't
 push to remote
 git add .gitignore
 
+Adding SSH to access repo
+ssh-keygen -t ed25519 -C "Github"
 
- 
+cd c:
+cat id_ed25519
 
 
