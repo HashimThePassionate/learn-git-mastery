@@ -1,6 +1,33 @@
 Check git version
 git --version
+-----------------------------------------------------
+Settings for git
+Name
+Email
+Default Editor 
+Line Ending
+-----------------------------------------------------
+Git Speicify three levels 
+SYSTEM (For All Users)
+GLOBAL (All repositories of the current user)
+LOCAL (The Current repository)
+-----------------------------------------------------
+Settings For Global Level
+git config --global user.name "Muhammad Hashim"     
+### We use double qoutes because we have space between name
+git config --global user.email hashiimtahir@gmail.com 
+### we don't spcify double qoutes because we don't have spaces
+git config --global core.editor "code --wait"
+### we specify default editor to vs code
+git config --global -e
+### see the config settings in vs code
+git config --global core.autocrlf true
+### core means carriage return and line feed \r \n to avoid conflict we use
 
+
+
+
+-----------------------------------------------------
 Check git configurations
 git config -l
 
