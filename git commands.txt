@@ -23,6 +23,15 @@ git config --global -e
 ### see the config settings in vs code
 git config --global core.autocrlf true
 ### core means carriage return and line feed \r \n to avoid conflict we use
+-----------------------------------------------------
+Getting Help 
+git config --help
+## getting help from git 
+## to move to next page simple use space and q for quit
+git config --h
+## use this command for short summary
+-----------------------------------------------------
+
 
 
 
