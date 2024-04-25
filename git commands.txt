@@ -30,19 +30,16 @@ git config --help
 ## to move to next page simple use space and q for quit
 git config --h
 ## use this command for short summary
------------------------------------------------------
-
-
-
-
-
------------------------------------------------------
 Check git configurations
 git config -l
-
+-----------------------------------------------------
 Initilize git 
+mkdir Mars
+cd Mars
 git init
+-----------------------------------------------------
 
+-----------------------------------------------------
 Check track file
 git status
 
