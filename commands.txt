@@ -60,9 +60,15 @@ git ls-files
 git add file2.txt
 #finally commit changes 
 git commit -m "File2 remove"
+-----------------------------------------------------
+# Remove from both file and staging area
+git rm file2.txt
+#it will remove from both directory and in staging area
+-----------------------------------------------------
+
 unstage recent command
 git reset filename.txt  or git rm --cached filename.txt
-
+<i class="fa fa-moon-o" aria-hidden="true"></i>
 check unstage data
 git diff
 
