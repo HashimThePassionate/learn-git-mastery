@@ -71,6 +71,21 @@ mv file1.txt main.js
 git add file.txt main.js
 #it will remove file1.txt and stage main.js 
 -----------------------------------------------------
+#Ignoring files
+mkdir logs
+#Creating a directory name logs
+echo Hello > logs/dev.log
+#Creating a new file dev.log and writing Hello which is inside of logs/ directory 
+git status
+# it will show us untracked logs/ directory
+echo logs/ > .gitignore 
+# to ignore logs/ directory we simple add a new file name .gitignore and write logs/ directory to it
+git status
+#Now when you check again it will no longer tell you about untracked logs/ directory because it is ignore by .gitignore
+git add .gitignore commands.txt
+git commit -m "Add gitignore"
+
+-----------------------------------------------------
 unstage recent command
 git reset filename.txt  or git rm --cached filename.txt
 <i class="fa fa-moon-o" aria-hidden="true"></i>
