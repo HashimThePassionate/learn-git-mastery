@@ -49,7 +49,17 @@ git status
 # add and commit in same line
 # only use when you are 100% sure that don't need to review a code
 git commit -am "add and commit"
-
+-----------------------------------------------------
+#Removing file2 because we don't any more
+rm file2.txt
+# rm will remove file2.txt file but i will contain in staging area
+git status
+#if you want to check that file2.txt is still in staging area run below command
+git ls-files
+# to remove from staging run this command
+git add file2.txt
+#finally commit changes 
+git commit -m "File2 remove"
 unstage recent command
 git reset filename.txt  or git rm --cached filename.txt
 
