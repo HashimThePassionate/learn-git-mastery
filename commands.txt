@@ -1,0 +1,156 @@
+Check git version
+git --version
+-----------------------------------------------------
+Settings for git
+Name
+Email
+Default Editor 
+Line Ending
+-----------------------------------------------------
+Git Speicify three levels 
+SYSTEM (For All Users)
+GLOBAL (All repositories of the current user)
+LOCAL (The Current repository)
+-----------------------------------------------------
+Settings For Global Level
+git config --global user.name "Muhammad Hashim"     
+### We use double qoutes because we have space between name
+git config --global user.email hashiimtahir@gmail.com 
+### we don't spcify double qoutes because we don't have spaces
+git config --global core.editor "code --wait"
+### we specify default editor to vs code
+git config --global -e
+### see the config settings in vs code
+git config --global core.autocrlf true
+### core means carriage return and line feed \r \n to avoid conflict we use
+-----------------------------------------------------
+Getting Help 
+git config --help
+## getting help from git 
+## to move to next page simple use space and q for quit
+git config --h
+## use this command for short summary
+Check git configurations
+git config -l
+-----------------------------------------------------
+Initilize git 
+mkdir Mars
+cd Mars
+git init
+-----------------------------------------------------
+git add <file names>
+git add *.txt
+git add .
+# add command is use to stage something in staging area 
+-----------------------------------------------------
+Check track file
+git status
+
+
+unstage recent command
+git reset filename.txt  or git rm --cached filename.txt
+
+check unstage data
+git diff
+
+check all files is staged but not commit
+git diff --staged
+
+check commit history
+git log
+git reflog
+git log --oneline
+
+stage and commit together
+git commit -a -m "New Commit"
+
+check commit history and git diff
+git log -p
+
+check specific commit history
+git show 2333457
+
+remove specific file
+git rm file3.txt
+
+rename specific file
+git mv file1.txt file.txt
+
+remove last commit 
+git revert HEAD
+
+add tag to current commit
+git tag v1.1
+
+switch to specific commit
+git checkout v1.1 or git checkout 2333457
+
+add tag with some message
+git tag -a v1.2 -m "Some Text"
+
+delete tag
+git tag -d v1.0
+
+check branch
+git branch
+
+create new branch
+git branch release1.0
+
+switch to another branch
+git checkout release1.0
+
+create new branch and switch as well
+git checkout -b release1.1
+
+delete branch 
+git checkout master
+git branch -d/-D feature2
+
+
+Merge branch
+git checkout master
+git merge feature2
+
+transfer one branch data to another branch
+git checkout feature2
+git rebase feature1
+
+Getting Started with Github
+git init 
+git commit -m "Committed"
+git remote add origin 'remote repo link'
+git push origin master
+
+Check git details
+git remote -v
+git remote show origin
+
+create remote branch
+git push --set-upstream origin master or git push -u origin master
+
+push new branch to remote
+git push origin feature1
+
+push tag to remote
+git push origin tagname
+
+push all tags in same command
+git push origin --tags
+
+get data from remote to local
+git pull
+
+add .gitignore which ignore some files to that don't 
+push to remote
+git add .gitignore
+
+Adding SSH to access repo
+ssh-keygen -t ed25519 -C "Github"
+
+cd c:
+cat id_ed25519
+
+
+
+eval "$(oh-my-posh init bash)"
