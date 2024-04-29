@@ -65,7 +65,12 @@ git commit -m "File2 remove"
 git rm file2.txt
 #it will remove from both directory and in staging area
 -----------------------------------------------------
-
+#Renaming or moving files
+mv file1.txt main.js
+#it will rename file1.txt to main.js
+git add file.txt main.js
+#it will remove file1.txt and stage main.js 
+-----------------------------------------------------
 unstage recent command
 git reset filename.txt  or git rm --cached filename.txt
 <i class="fa fa-moon-o" aria-hidden="true"></i>
