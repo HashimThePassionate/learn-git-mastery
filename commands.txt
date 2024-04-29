@@ -84,6 +84,16 @@ git status
 #Now when you check again it will no longer tell you about untracked logs/ directory because it is ignore by .gitignore
 git add .gitignore commands.txt
 git commit -m "Add gitignore"
+-----------------------------------------------------
+#When you accidentally Committed something than git will not ignore in gitignore file
+mkdir bin
+#Creating a bin directory
+echo Hello > bin/app.bin
+# writing hello to app.bin file inside a bin directory
+git add .
+#Accidentally add to staged file
+git commit -m "Add Bin"
+#Accidentally committed 
 
 -----------------------------------------------------
 unstage recent command
