@@ -151,3 +151,5 @@ cd c:
 cat id_ed25519
 
 
+
+eval "$(oh-my-posh init bash)"
