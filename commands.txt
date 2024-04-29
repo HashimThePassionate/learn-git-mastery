@@ -45,7 +45,10 @@ git add .
 -----------------------------------------------------
 Check track file
 git status
-
+-----------------------------------------------------
+# add and commit in same line
+# only use when you are 100% sure that don't need to review a code
+git commit -am "add and commit"
 
 unstage recent command
 git reset filename.txt  or git rm --cached filename.txt
