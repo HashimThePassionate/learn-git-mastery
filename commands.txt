@@ -94,7 +94,22 @@ git add .
 #Accidentally add to staged file
 git commit -m "Add Bin"
 #Accidentally committed 
-
+echo bin/ >> .gitignore
+git add .
+git commit -m "Include bin / in gitignore"
+again now modify app.bin to check git ignore or not
+echo Helloworld >> bin/app.bin
+git status
+# git will say bin/app.bin in modified means git is not ignoring
+#why we this because app.bin file was in staging area
+git ls-files
+#we can easily see in staging area
+# we want to remove only in staging area not in working directory
+git rm -h
+#we want to see help
+git rm --cached -r bin/
+#this command will remove bin/ directory in staging area not in working area lets verify
+git ls-files
 -----------------------------------------------------
 unstage recent command
 git reset filename.txt  or git rm --cached filename.txt
