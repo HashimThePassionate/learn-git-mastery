@@ -199,6 +199,29 @@ git log --oneline --reverse
 git reflog
 #This is more focused on tracking changes to references within the repository, which can help in recovering lost commits or branches.
 -----------------------------------------------------
+Viewing a commit Exactly
+if we want to exatly see what we have change in a given commit 
+git log --oneline
+#Use for view commit history
+#I want to see exact content of a commit 
+#We can use 
+git show  <unique identifier or Head~1>
+#lets see
+git show 6973451
+#this will show the commit exact changes using identifier 6973451
+git show Head~2
+#this will step down to Head of two previous steps
+git show af7a9a4:.gitignore
+git show 01c9746:bin/app.bin
+#Seeing more detail
+git ls-tree Head~1
+#ls-tree (means list a files and directory as tree for specific Tree Data Structure)
+1. Blob for files
+2. Tree for directories
+#To see all the files and directories in a commit 
+git ls-tree Head~1:.gitignore
+
+-----------------------------------------------------
 
 stage and commit together
 git commit -a -m "New Commit"
