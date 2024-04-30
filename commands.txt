@@ -170,6 +170,26 @@ git diff --staged
 git diff
 # With this command we can compare untracked / unstaging changes
 -----------------------------------------------------
+Visual Diff Tools
+#We use visual diff tools to compare files side by side
+#In this example we simply use vs code as diff tools
+#To configure we need to instructions as global level for all repositories
+git config --global diff.tool vscode
+#We simple set globally diff.tool as vscode Note vscode is just a name or tag
+git config --global difftool.vscode.cmd "code --wait --diff $LOCAl $REMOTE"
+#now we tell git to open vs code editor for comparing files
+1. code means default editor as vs code
+2. --wait means terminal will wait until we close vs code
+3. --diff (is used for comparing files side by side)
+4. $LOCAL and $REMOTE (is just a placeholder for comparing old and new copy) 
+git config --global -e
+#this command is use to open vs code as editor
+git difftool 
+#This is used to comparing unstaging files or untracked files
+git difftool --staged
+#This is used for comparing unstaging files
+-----------------------------------------------------
+
 
 check commit history
 git log
