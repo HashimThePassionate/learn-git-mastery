@@ -111,6 +111,58 @@ git rm --cached -r bin/
 #this command will remove bin/ directory in staging area not in working area lets verify
 git ls-files
 -----------------------------------------------------
+git status -s 
+# we can use git status -s for short status
+echo sky >> moon/main.js
+# we simple append sky on main.js
+echo mountains > moon/file2.js
+#simple create a file2.js inside moon directory and write mountains
+git status
+# in this sommand we can see modified files and untracked files in very detail
+git status -s
+#But with this command we can see short status
+like 
+```
+ M moon/main.js
+?? moon/file.js
+```
+# M means main.js is modified and we need to add it to update in staging area
+# ?? double question mark means we have an untracked  file and we need to add it to place in staging area
+git add moon/main.js
+git status -s
+# now when we snap this file in staging area we can see output like this
+```
+M  moon/main.js 
+?? moon/file.js
+```
+#M in green color which means we have add and update in staging area 
+echo river >> moon/main.js
+# now we  again append something on moon/main.js
+git status -s
+# output look like this
+```
+MM moon/main.js
+?? moon/file.js
+```
+#first M in green means last modified were already in staging are but Red M means we modifed something which is not in staging area
+git add moon/main.js
+#So lets add again in staging area to modify changes
+git status -s
+#Now the output is look like this
+```
+M  moon/main.js
+?? moon/file.js
+```
+git add  moon/file2.js
+#add file to staging area
+git status -s
+```
+A  moon/file.js
+M  moon/main.js
+```
+# A means file.js is added in staging area
+# M in green means modified file added in staging arae
+-----------------------------------------------------
 unstage recent command
 git reset filename.txt  or git rm --cached filename.txt
 <i class="fa fa-moon-o" aria-hidden="true"></i>
