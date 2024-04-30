@@ -163,14 +163,13 @@ M  moon/main.js
 # A means file.js is added in staging area
 # M in green means modified file added in staging arae
 -----------------------------------------------------
-unstage recent command
-git reset filename.txt  or git rm --cached filename.txt
-<i class="fa fa-moon-o" aria-hidden="true"></i>
-check unstage data
-git diff
 
-check all files is staged but not commit
+check all files is staged but not commit means in staging area
 git diff --staged
+#we can easily compare staging are old file with new file
+git diff
+# With this command we can compare untracked / unstaging changes
+-----------------------------------------------------
 
 check commit history
 git log
