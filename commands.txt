@@ -189,12 +189,16 @@ git difftool
 git difftool --staged
 #This is used for comparing unstaging files
 -----------------------------------------------------
-
-
-check commit history
+Viewing a commit history
 git log
-git reflog
+# this log is used for comprehensive commit history
 git log --oneline
+#this is used for shorter history
+git log --oneline --reverse
+#this is used for shorter history but in reverse order
+git reflog
+#This is more focused on tracking changes to references within the repository, which can help in recovering lost commits or branches.
+-----------------------------------------------------
 
 stage and commit together
 git commit -a -m "New Commit"
