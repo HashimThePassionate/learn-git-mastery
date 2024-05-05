@@ -239,6 +239,14 @@ look we have untracked file file4.js to remove completely untracked file we use
 git clean -h for help
 git clean --f file3.js
 ----------------------------------------------------------------------------------------------------------------------------------
+Restoring a file to an earlier version
+git rm moon/file.js
+we romove from both file as well as stage
+git commit -m "Remove file.js"
+git restore -h
+git restore --source=HEAD~1 moon/file.js
+
+----------------------------------------------------------------------------------------------------------------------------------
 stage and commit together
 git commit -a -m "New Commit"
 
