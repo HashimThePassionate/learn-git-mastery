@@ -222,6 +222,13 @@ git ls-tree Head~1
 git ls-tree Head~1:.gitignore
 
 ----------------------------------------------------------------------------------------------------------------------------------
+
+Restore unstaging Files
+echo fishes >> moon/main.js
+git add moon/main.js
+git restore --staged moon/main.js
+to store the unstaing area we use above command
+----------------------------------------------------------------------------------------------------------------------------------
 stage and commit together
 git commit -a -m "New Commit"
 
