@@ -229,6 +229,16 @@ git add moon/main.js
 git restore --staged moon/main.js
 to store the unstaing area we use above command
 ----------------------------------------------------------------------------------------------------------------------------------
+Discard Local Changes
+lets we already modify commands.txt and we want to restore last untracked changes we use
+git restore commands.txt
+now lets we create a new file and write something
+echo Hello > file3.js
+git status -s
+look we have untracked file file4.js to remove completely untracked file we use 
+git clean -h for help
+git clean --f file3.js
+----------------------------------------------------------------------------------------------------------------------------------
 stage and commit together
 git commit -a -m "New Commit"
 
