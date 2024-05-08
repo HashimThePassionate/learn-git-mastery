@@ -1,3 +1,0 @@
-mountains
-rivers
-fishing
