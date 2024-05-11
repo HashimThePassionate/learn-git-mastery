@@ -529,6 +529,125 @@ What we learn
 ----------------------------------------------------------------------------------------------------------------------------------
 # Getting a repository
 ----------------------------------------------------------------------------------------------------------------------------------
+# Working with branches
+----------------------------------------------------------------------------------------------------------------------------------
+// lets first see the all branches
+git branch
+// Currently we only have "Master" branch lets first create a new branch assume we want to fix some bug so we need to create a new branch to separate the code to create isolate level
+// lets create a branch name "BugFix"
+git branch Bugfix
+// Now to see all the branch use "git branch"
+git branch
+```
+  BugFix
+* master
+```
+// look we have now new branch, we need to switch to new branch i.e. "BugFix"
+git switch Bugfix
+```
+    Switched to branch 'Bugfix'
+```
+// Now again check where we were now
+git branch
+```
+* BugFix
+  master
+```
+// See are now currently in BugFix branch
+// we can also use "git status" to see the current branch name
+git status 
+```
+    On branch Bugfix
+    nothing to commit, working tree clean
+```
+// Before going forward we need to rename this branch name "BugFix" to someone else because its not clear what bug we are fixing, so it is better to use more specific. Lets see we used "bugfix-logout-form", to rename the branch name we use.
+git branch -m BugFix bugfix-logout-form
+// look we have renamed our branch successfully
+git branch
+```
+* bugfix-logout-form
+  master
+```
+// Now lets make a few changes in this new branch 
+// lets open  audience.txt file
+code audience.txt
+add these lines 
+```
+Hey there, we are in new bug fix branch
+and we are going to add some changes
+```
+// Now lets add to staging area and commit it.
+git add audience.txt
+git commit -m "Fix the bug that prevented the users from logout"
+// Now lets check the logs
+git log --online
+```
+98ec5af (HEAD -> bugfix-logout-form) Fix the bug that prevented the users from logout
+a642e12 (master) Add header to all pages.
+50db987 Include the first section in TOC.
+555b62e Include the note about committing after staging the changes.
+91f7d40 Explain various ways to stage changes.
+edb3594 First draft of staging changes.
+24e86ee Add command line and GUI tools to the objectives.
+36cd6db Include the command prompt in code sample.
+9b6ebfd Add a header to the page about initializing a repo.
+fa1b75e Include the warning about removing .git directory.
+dad47ed Write the first draft of initializing a repo.
+fb0d184 Define the audience.
+```
+// Look HEAD is now pointing to  "bugfix-logout-form" it means git version control is not creating a saparate copy of "master" branch
+// Now lets switch to master branch again and check the logs
+// See all the changes are gone because we are in sparate master branch isolation, 
+git switch master
+git log --oneline
+```
+a642e12 (HEAD -> master) Add header to all pages.
+50db987 Include the first section in TOC.
+555b62e Include the note about committing after staging the changes.
+91f7d40 Explain various ways to stage changes.
+edb3594 First draft of staging changes.
+24e86ee Add command line and GUI tools to the objectives.
+36cd6db Include the command prompt in code sample.
+9b6ebfd Add a header to the page about initializing a repo.
+fa1b75e Include the warning about removing .git directory.
+dad47ed Write the first draft of initializing a repo.
+fb0d184 Define the audience.
+1ebb7a7 Define the objectives.
+```
+// Look we dont't see the new commit in "bugfix-logout-form" branch to see the new commit use this command.
+git log --oneline --all
+```
+98ec5af (bugfix-logout-form) Fix the bug that prevented the users from logout
+a642e12 (HEAD -> master) Add header to all pages.
+50db987 Include the first section in TOC.
+555b62e Include the note about committing after staging the changes.
+91f7d40 Explain various ways to stage changes.
+edb3594 First draft of staging changes.
+24e86ee Add command line and GUI tools to the objectives.
+36cd6db Include the command prompt in code sample.
+9b6ebfd Add a header to the page about initializing a repo.
+fa1b75e Include the warning about removing .git directory.
+dad47ed Write the first draft of initializing a repo.
+fb0d184 Define the audience.
+1ebb7a7 Define the objectives.
+ca49180 Initial commit.
+```
+// Now look we can see new commit in saparate branch.
+// Lets see we fix the bug but without merge we are trying to delete
+git branch -d bugfix-logout-form
+// look we see this error
+```
+error: The branch 'bugfix-logout-form' is not fully merged.
+If you are sure you want to delete it, run 'git branch -D bugfix-logout-form'.
+```
+// What does its means? well git is preventing and  giving an error that you changed something but without merging you are trying to delete a branch
+// So to delete forecefully we use
+git branch -D bugfix-logout-form
+```
+Deleted branch bugfix-logout-form (was 98ec5af).
+```
+// Now we forefully deleted the branch.
+----------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
