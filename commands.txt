@@ -693,6 +693,70 @@ git diff --name-only  bugfix
 git diff --name-status  bugfix
 // we can also see status
 ----------------------------------------------------------------------------------------------------------------------------------
+# Stashing
+// lets switch to bugfix branch
+git switch bugfix
+// lets make some changes 
+echo Hello >> audienct.txt
+// Now lets switch to master without adding to staging or committing
+git switch master
+```
+error: Your local changes to the following files would be overwritten by checkout:
+        audience.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+```
+// What is stashing?
+// Stashing means storing it in a safe place, so we can switch back add it in staging, Note stash is not storing in staging area
+git stash push -m "New line Hello added in stash area"
+```
+Saved working directory and index state On bugfix: New line Hello added in stash area
+```
+// Note stash will not add automatically something
+// lets create a new file
+echo Hi > file.txt
+git status -S
+// This is a new untracked file to add in stash with message we use
+git stash -am "My new stash"
+```
+Saved working directory and index state On bugfix: My new stash
+```
+//to see the stash list
+git stash list 
+```
+stash@{0}: On bugfix: My new stash
+stash@{1}: On bugfix: New line Hello added in stash area
+```
+// Now lets swtch to master 
+git switch master
+```
+Switched to branch 'master'
+```
+// After done something lets switch to bugfix branch
+// Now we know the stash number we can use this
+git stash show 1
+```
+audience.txt | 2 +-
+1 file changed, 1 insertion(+), 1 deletion(-)
+```
+//  lets now apply stash to staging area use
+git stash apply 1
+```
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   audience.txt
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+// lets drop stash 1
+git stash drop 1
+```
+Dropped refs/stash@{1} (a28d97d5c3c0a857f32b0e312cbf0213a236e19e)
+```
+git stash list 
+to remove all the stash 
+git stash clear
+----------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
