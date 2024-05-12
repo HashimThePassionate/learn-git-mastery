@@ -648,6 +648,51 @@ Deleted branch bugfix-logout-form (was 98ec5af).
 ```
 // Now we forefully deleted the branch.
 ----------------------------------------------------------------------------------------------------------------------------------
+# Comparing branches
+// first we need to switch to master branch
+git switch master
+// Now we need to check all the commits that is not in master branch
+git log --oneline master..bugfix
+// bugfix is new branch that have two commits 
+```
+11deb71 (bugfix) Fixed newly bug
+e2f7a41 Bug fixed
+```
+// if we want to see actual changes in bugfix commits
+git diff master..bugfix
+```
+diff --git a/audience.txt b/audience.txt
+index 4cfef55..c01b824 100644
+--- a/audience.txt
++++ b/audience.txt
+@@ -1,4 +1,16 @@
+ AUDIENCE
+
+ This course is for anyone who wants to learn Git.
+-No prior experience is required.
+\ No newline at end of file
++No prior experience is required.
++
++Welcome to venus bugfix branch
++
++....................
++.................
++.............
++.........
++......
++....
++..
++.
++Another new changes
+\ No newline at end of file
+```
+// Look currently we are already in master branch so there is a shorthand to see all the bugfix exact changes
+git diff bugfix
+git diff --name-only  bugfix
+// some time we oonly want to see which file changes
+git diff --name-status  bugfix
+// we can also see status
+----------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
