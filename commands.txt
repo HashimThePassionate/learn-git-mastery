@@ -881,8 +881,82 @@ git log --oneline --all --graph
 git config ff no
 // To disable fast forwrad merge for all repository
 git config --global ff no
-
-----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
+# Three way merges
+git log --oneline --all --graph
+```
+*   d48d735 (HEAD -> master) Merge branch 'bugfix/about'
+|\
+| * c34c6bb (bugfix/about) Updated toc
+|/
+* b07884d Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// lets create a new feature branch and made come changes
+git switch -C feature/password
+// Add some changes
+echo *********** > password.txt
+git add .
+git commit -m "Password Feature Added"
+git log --oneline --all --graph
+```
+* d203fc8 (HEAD -> feature/password) Password Feature Added
+*   d48d735 (master) Merge branch 'bugfix/about'
+|\
+| * c34c6bb (bugfix/about) Updated toc
+|/
+* b07884d Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+```
+git switch master
+// made some changes
+echo Hello >> objectives.txt
+git add .
+git commit -m "Updated objective.txt"
+git log --oneline --all --graph
+```
+* 2902f6f (HEAD -> master) Updated objective.txt
+| * d203fc8 (feature/password) Password Feature Added
+|/
+*   d48d735 Merge branch 'bugfix/about'
+|\
+| * c34c6bb (bugfix/about) Updated toc
+|/
+* b07884d Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+git merge feature/password
+---------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
