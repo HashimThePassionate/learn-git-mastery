@@ -957,6 +957,20 @@ git log --oneline --all --graph
 ```
 git merge feature/password
 ---------------------------------------------------------------------------------------------------------------------------------
+# Viewing merge and unmerge branches
+// Sometimes we merges branches and forget to delete, so too see all the branches that have been merge with master we use
+git branch --merged
+```
+  bugfix/about
+  feature/password
+* master
+```
+// lets delete
+git branch -d bugfix/about
+git branch -d feature/password
+// To the branches that have not been merged
+git branch --no-merged
+---------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
