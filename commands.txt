@@ -971,6 +971,41 @@ git branch -d feature/password
 // To the branches that have not been merged
 git branch --no-merged
 ---------------------------------------------------------------------------------------------------------------------------------
+# Merge conflict
+git switch -C feature/change-password
+code password.txt
+// lets add "change in the bugfix branch" in the end of  password.txt
+git status -s
+git add .
+git commit -m "Change password updated"
+ git switch master
+code password.txt
+// lets add "change in the bugfix branch" in the end of  password.txt
+git status -s
+git add .
+git commit -m "Change password updated"
+git merge feature/change-password
+```
+Auto-merging password.txt
+CONFLICT (content): Merge conflict in password.txt
+Automatic merge failed; fix conflicts and then commit the result.
+```
+git status
+
+```
+ On branch master
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+        both modified:   password.txt
+```
+// lets aceept both changes
+git add .
+git commit -m "Accept both changes"
+---------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
