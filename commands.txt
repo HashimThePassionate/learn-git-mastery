@@ -774,6 +774,115 @@ git stash clear
 - It then combines these changes into a new merge commit, integrating the changes from both branches.
 - This type of merge is necessary to reconcile conflicting changes and create a new unified state.
 ----------------------------------------------------------------------------------------------------------------------------------
+# Fast Forward Merges
+// lets first look all the commits 
+git log --oneline --all --graph
+```
+* b07884d (bugfix) Added new changes
+* a642e12 (HEAD -> master) Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the object
+```
+// now we want to merge using fast forward with master we need to switch to master first
+git switch master
+git merge bugfix 
+```
+Updating a642e12..b07884d
+Fast-forward
+ audience.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+```
+// by default fast forward merge is applied because we have linear path
+git log --oneline --all --graph
+```
+* b07884d (HEAD -> master, bugfix) Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// Now lets create a new branch and made some changes and merge it but in this time we don't use no fast forward merge
+// But this time we use shorthand to quickly create and switch
+git branch -d bugfix
+git switch -C bugfix/about
+git add >> audience.txt
+git add audience.txt
+git commit -m "Updated audience file"
+git switch master
+```
+Switched to a new branch 'bugfix/about'
+```
+git log --oneline --all --graph
+```
+* c34c6bb (bugfix/about) Updated toc
+* b07884d (HEAD -> master) Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// Now lets merge new branch using no fast forward 
+git merge --no-ff bugfix/about
+// This will create a new merge commit 
+```
+Merge made by the 'ort' strategy.
+ audience.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+```
+git log --oneline --all --graph
+```
+*   d48d735 (HEAD -> master) Merge branch 'bugfix/about'
+|\
+| * c34c6bb (bugfix/about) Updated toc
+|/
+* b07884d Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// To disable fast forwrad merge for current repository
+git config ff no
+// To disable fast forwrad merge for all repository
+git config --global ff no
+
+----------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
