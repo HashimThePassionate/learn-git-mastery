@@ -1006,6 +1006,26 @@ Unmerged paths:
 git add .
 git commit -m "Accept both changes"
 ---------------------------------------------------------------------------------------------------------------------------------
+# Graphical Merge Tool
+git switch -C bugfix
+code audience.txt
+// Add 'This is bugfix'
+git add .
+git commit -m "Bugfix"
+git switch master
+// Add 'This is master'
+git add .
+git commit -m "master"
+// Now when we merge
+git merge master 
+// We want to open default graphical tool 'p4merge' to merge in graphical way
+// lets configer p4merge
+git config --global merge.tool p4merge
+// Next tell git where to find p4merge tool
+git config --global mergetool.p4merge.path "C:\Program Files\Perforce\p4merge"
+
+
+---------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
