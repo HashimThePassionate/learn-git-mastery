@@ -1199,6 +1199,129 @@ git log --oneline --all --graph
 * ca49180 Initial commit.
 ```
 ---------------------------------------------------------------------------------------------------------------------------------
+# Squash Merging
+// We use squash merge to combine multiple commits from a feature branch into a single commit before merging into the main branch. This helps keep the commit history clean and concise, making it easier to track changes. Squash merging is particularly useful for consolidating numerous small or experimental commits into a coherent commit message.
+
+git switch -C bugfix/photo-upload
+```
+Switched to a new branch 'bugfix/photo-upload'
+```
+echo bugfix >> audience.txt
+git commit -am "update audience.txt"
+```
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+echo bugfix >> toc.txt
+git commit -am "update toc.txt"
+```
+1 file changed, 1 insertion(+), 1 deletion(-)
+```
+git log --oneline --all --graph
+```
+* b9d8cbd (HEAD -> bugfix/photo-upload) update toc.txt
+* 1770ea9 update audience.txt
+* 56ea239 (master) Revert "Merge branch 'bugfix'"     
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// Now we use a squash merge instead of fast forward
+git switch master
+git merge --squash bugfix/photo-upload
+```
+Updating 56ea239..b9d8cbd
+Fast-forward
+Squash commit -- not updating HEAD
+ audience.txt | 2 +-
+ toc.txt      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+```
+git status -s
+```
+M  audience.txt
+M  toc.txt     
+```
+we need to add and commit
+git commit -am "Squash Merge"
+```
+[master 2ced86d] Squash Merge
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+```
+git log --oneline --all --graph
+```
+* 2ced86d (HEAD -> master) Squash Merge
+| * b9d8cbd (bugfix/photo-upload) update toc.txt
+| * 1770ea9 update audience.txt
+|/
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\  
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/  
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+it branch -D bugfix/photo-upload
+git log --oneline --all --graph
+```
+* 2ced86d (HEAD -> master) Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.       
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+---------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
