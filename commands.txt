@@ -1322,6 +1322,208 @@ git log --oneline --all --graph
 * ca49180 Initial commit.
 ```
 ---------------------------------------------------------------------------------------------------------------------------------
+# Rebasing
+// Rebasing in Git is the process of moving or combining a sequence of commits to a new base commit. This is typically done to integrate changes from one branch into another, making the commit history linear and more readable by avoiding unnecessary merge commits.
+
+// Why Use Rebasing Only in Local Repository?
+// History Rewriting: Rebasing rewrites commit history, which can change commit hashes. If you rebase and then push to a shared branch, it can cause confusion and conflicts for others who have based their work on the original commits.
+Collaboration Issues: When working in a shared repository, others might have already pulled the original commits. Rebasing those commits can lead to a complex and error-prone merge process for them.
+// Safer Local Experimentation: Rebasing is safer to perform locally because it allows you to clean up and reorganize your commits before sharing them, ensuring that the public commit history remains clean and stable.
+
+git switch -C feature/shpping-cart
+```
+Switched to a new branch 'feature/shpping-cart'
+```
+echo Hello > cart.txt
+git add .
+git commit -m "Add cart.txt"
+git log --oneline --all --graph
+```
+* 57430d3 (HEAD -> feature/shpping-cart) Add cart.txt
+* 2ced86d (master) Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+git switch master
+```
+Switched to branch 'master'
+```
+echo Hello >> toc.txt
+git commit -am "update toc"
+git log --oneline --all --graph
+```
+* 16b1403 (HEAD -> master) update toc
+| * 57430d3 (feature/shpping-cart) Add cart.txt
+|/
+* 2ced86d Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/  
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// To rebase the branch first we need to switch to target branch
+git switch feature/shpping-cart
+git rebase master
+```
+Successfully rebased and updated refs/heads/feature/shpping-cart.
+```
+git log --oneline --all --graph
+```
+* 9340bfd (HEAD -> feature/shpping-cart) Add cart.txt
+* 16b1403 (master) update toc
+* 2ced86d Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+git switch master
+git merge feature/shpping-cart
+```
+Updating 16b1403..9340bfd
+Fast-forward
+ cart.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 cart.txt  
+```
+git log --oneline --all --graph
+```
+* 9340bfd (HEAD -> master, feature/shpping-cart) Add cart.txt
+* 16b1403 update toc
+* 2ced86d Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/  
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+```
+
+// If there is conflict? how the rebase will work?
+git branch
+```
+  feature/shpping-cart
+* master
+```
+echo occean >> toc.txt
+git commit -am "Update toc.txt"
+git switch feature/shpping-cart
+echo mountains >> toc.txt
+git commit -am "add mountains in toc.txt"
+git log --oneline --all --graph
+```
+* 81c8fb8 (HEAD -> feature/shpping-cart) add mountains in toc.txt
+| * 4e252ae (master) Update toc.txt
+|/
+* 9340bfd Add cart.txt
+* 16b1403 update toc
+* 2ced86d Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+```
+git rebase master
+```
+Auto-merging toc.txt
+CONFLICT (content): Merge conflict in toc.txt
+error: could not apply 81c8fb8... add mountains in toc.txt
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+Could not apply 81c8fb8... add mountains in toc.txt
+```
+git mergetool
+ git rebase --continue
+``` 
+[detached HEAD 15cdad7] add mountains in toc.txt
+1 file changed, 1 insertion(+), 1 deletion(-)  
+Successfully rebased and updated refs/heads/feature/shpping-cart.
+```
+git status -s
+``
+?? toc.txt.orig
+```
+cat toc.txt.orig
+```
+rm toc.txt.orig
+// to prevent in future not to create backup file
+git config --global mergetool.keepBackup false
+---------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
