@@ -1040,6 +1040,165 @@ git merge master
 // to cancel a merge 
 git merge --abort
 ---------------------------------------------------------------------------------------------------------------------------------
+# Undoing a faulty merge
+// sometimes we merge something and we find our code is not working properly, in this situation we undo a merge and then remerge
+// lets look history
+git log --oneline --all --graph
+```
+*   ad4f937 (HEAD -> master) Merge branch 'bugfix'
+|\
+| * d0e95c0 (bugfix) Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// lets see this is a faulty merge " ad4f937 (HEAD -> master) Merge branch 'bugfix'"
+// So we want to undo a merge we have two options
+// One option is remove this commit as it was never there, but you have to becareful with this solution because as part of removing this commit we are rewriting history, rewriting history is totally fine if this history is local in our repository, but you have shared our commits with other team members. or if you have pushed our commits to remote repository, then we should not rewrite our history. 
+// Other option is instead of removing this commit we should revert it which means we create a new commit that will cancel all the changes in previous commit. 
+// Lets look both this solutions
+
+// Option One
+# remove the last commit 
+git log --oneline --all --graph
+*   ad4f937 (HEAD -> master) Merge branch 'bugfix'
+|\
+| * d0e95c0 (bugfix) Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+git reset --hard HEAD~1
+```
+* 4404bdd (HEAD -> master) audience
+* d7d7464 master
+* 84d855e master branch
+| * d0e95c0 (bugfix) Commit passwords
+| * 49a023f Bugfix branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+//Details:
+
+--hard: This option is used when you want to completely discard all changes in the working directory and the staging area, effectively resetting the repository to the state of the specified commit. This is destructive and should be used with caution.
+
+--soft: This option keeps your changes in both the working directory and the staging area, but moves the HEAD pointer to the specified commit. This is useful when you want to undo a commit but keep your changes for further modifications or a new commit.
+
+--mixed: This is the default option if no parameter is specified. It resets the commit history to the specified commit and keeps your changes in the working directory but clears the staging area. This is useful when you want to unstage changes without discarding them.
+
+// look 'merge branch' commit is no longer here but we can recover it
+git reset --hard ad4f937
+```
+HEAD is now at ad4f937 Merge branch 'bugfix'
+```
+git log --oneline --all --graph
+```
+*   ad4f937 (HEAD -> master) Merge branch 'bugfix'
+|\
+| * d0e95c0 (bugfix) Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// Note we undo commit use only if you have not shared this we anyone
+
+# Option Two
+// But if you shared your history with someone then instead of undoing we should use revert the last commit 
+git revert HEAD
+```
+error: commit ad4f937b752ab7c24b241ccd6d7beafe5d065cd7 is a merge but no -m option was given.
+fatal: revert failed
+```
+// Why we got this type of error? well you this last commit have two parents, one parent on the master branch and two parent on the bugfix branch
+git revert -m 1 HEAD
+```
+[master 56ea239] Revert "Merge branch 'bugfix'" 
+ 2 files changed, 1 insertion(+), 3 deletions(-)
+ delete mode 100644 password.txt
+```
+git log --oneline --all --graph
+```
+* 56ea239 (HEAD -> master) Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 (bugfix) Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+---------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
