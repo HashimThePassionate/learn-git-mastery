@@ -1585,6 +1585,13 @@ git log --oneline --all --graph
 * 50db987 Include the first section in TOC.
 ```
 ---------------------------------------------------------------------------------------------------------------------------------
+# Picking a latest file in another branch without full commit
+git switch -C send-mail
+echo river >> toc.txt
+git commit -am "river"
+git switch master
+git restore --source=send-mail -- toc.txt
+---------------------------------------------------------------------------------------------------------------------------------
 
 -------------Setting up Oh My Posh in windows ---------------
 ----------------------------------------------------------------------------------------------------------------------------------
