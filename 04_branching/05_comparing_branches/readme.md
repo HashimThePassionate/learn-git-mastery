@@ -1,46 +1,73 @@
-# Comparing Branches
+Let's break down each step:
 
-## Overview
-This section covers how to compare branches and view the differences between them.
+1. **Switching to the master branch**: 
+   ```bash
+   git switch master
+   ```
+   This command switches the current working branch to the master branch.
 
-## Step 1: Switch to the main branch
-Ensure you're on the main branch (e.g., master) before comparing with another branch:
-```bash
-git switch master
-```
+2. **Checking commits not in master branch**:
+   ```bash
+   git log --oneline master..bugfix
+   ```
+   This command lists all the commits that are in the `bugfix` branch but not in the `master` branch. The `--oneline` option shows a concise log output with only the commit messages.
 
-## Step 2: View commits not in the main branch
-To see the commits that exist in another branch but not in the main branch, use:
-```bash
-git log --oneline master..bugfix
-```
-This command displays the commits exclusive to the "bugfix" branch.
+   Output:
+   ```
+   11deb71 (bugfix) Fixed newly bug
+   e2f7a41 Bug fixed
+   ```
+   This output displays two commits present in the `bugfix` branch that are not in the `master` branch.
 
-## Step 3: View the actual changes between branches
-To see the actual changes between branches, you can use:
-```bash
-git diff master..bugfix
-```
-This command shows the differences in content between the main branch and the "bugfix" branch.
+3. **Viewing actual changes in bugfix commits**:
+   ```bash
+   git diff master..bugfix
+   ```
+   This command shows the differences between the `master` branch and the `bugfix` branch. It displays the changes made in the files between the two branches.
 
-## Step 4: Shortcut for comparing branches
-If you're already on the main branch, you can use a shorthand to compare directly with another branch:
-```bash
-git diff bugfix
-```
+   Output:
+   ```
+   diff --git a/audience.txt b/audience.txt
+   index 4cfef55..c01b824 100644
+   --- a/audience.txt
+   +++ b/audience.txt
+   @@ -1,4 +1,16 @@
+    AUDIENCE
+   
+    This course is for anyone who wants to learn Git.
+   -No prior experience is required.
+   \ No newline at end of file
+   +No prior experience is required.
+   +
+   +Welcome to venus bugfix branch
+   +
+   +....................
+   +.................
+   +.............
+   +.........
+   +......
+   +....
+   +..
+   +.
+   +Another new changes
+   \ No newline at end of file
+   ```
+   This output shows the differences between the `audience.txt` file in the `master` and `bugfix` branches.
 
-## Step 5: View only the names of changed files
-To see only the names of files that are different between branches, use:
-```bash
-git diff --name-only bugfix
-```
+4. **Using shorthand to view bugfix changes**:
+   ```bash
+   git diff bugfix
+   ```
+   This command is a shorthand for comparing the current branch (master) with the `bugfix` branch. Since we're already on the `master` branch, we omit `master..` in the diff command.
 
-## Step 6: View status of changed files
-To see the status (modified, added, deleted) of files that are different between branches, use:
-```bash
-git diff --name-status bugfix
-```
+   ```bash
+   git diff --name-only bugfix
+   ```
+   This command shows only the names of the files that are different between the `master` and `bugfix` branches.
 
-## Conclusion
-Comparing branches allows you to understand the differences in code between different development branches, aiding in code review and merging decisions.
-```
+   ```bash
+   git diff --name-status bugfix
+   ```
+   This command shows the status of each file that is different between the `master` and `bugfix` branches.
+
+These commands are useful for comparing changes between branches and understanding what changes have been made in different branches.
