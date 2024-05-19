@@ -209,7 +209,7 @@ A  moon/file.js
 M  moon/main.js
 ```
 // A means file.js is added in staging area
-// M in green means modified file added in staging arae
+// M in green means modified file added in staging area
 ----------------------------------------------------------------------------------------------------------------------------------
 # Viewing staged and unstaged changes
 // Check all files that is in staged (add <file names>) but not committed  we use "git diff --staged"
