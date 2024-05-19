@@ -1,4 +1,4 @@
-## Initializing a Git Repository
+a ## Initializing a Git Repository
 
 ### 1. Create a New Directory
 First, create a new directory for your project. You can name it whatever you like. For example, let's create a directory named "Mars."
