@@ -1,0 +1,1705 @@
+Check git version
+git --version
+----------------------------------------------------------------------------------------------------------------------------------
+-------------Getting Started ---------------
+What we learn
+1. Fundamenatal Concepts
+2. Creatings Snapshots
+3. Browsing a project history
+4. Branching and Merging
+5. Collaborating using github
+---------------------------------------------------------------------------------------------------
+# configuring git
+// Name
+// Email
+// Default Editor 
+// Line Ending
+Git Speicify three levels 
+// SYSTEM (For All Users)
+// GLOBAL (All repositories of the current user)
+// LOCAL (The Current repository)
+Settings For Global Level
+git config --global user.name "Muhammad Hashim"     
+// We use double qoutes because we have space between name
+git config --global user.email hashiimtahir@gmail.com 
+// We don't spcify double qoutes because we don't have spaces
+git config --global core.editor "code --wait"
+// We specify default editor to vs code
+git config --global -e
+// See the config settings in vs code
+git config --global core.autocrlf true
+// Core means carriage return and line feed \r \n to avoid conflict we use
+----------------------------------------------------------------------------------------------------------------------------------
+# Getting Help 
+git config --help
+// Getting help from git 
+// to move to next page simple use space and q for quit
+git config --h
+// Use this command for short summary
+// Check git configurations
+git config -l
+----------------------------------------------------------------------------------------------------------------------------------
+-------------Creating Snapshots ---------------
+Learn all the fundamenatls concepts of git
+1. Initilizing 
+2. staging files
+3. Committing Changes
+4. Skipping staging area
+5. Removing Files
+6. Renaming or Removing files
+7. Ignoring files
+8. Short Status
+9. Viewing staged and unstaged changes
+10. Visual diff tools
+11. Viewing a commit history
+12. Viewing a commit Exactly
+13. Unstaging Files
+14. Discard Local Changes
+15. Restoring a file to an earlier version
+----------------------------------------------------------------------------------------------------------------------------------
+# Initilizing a git
+// Initilize git 
+mkdir Mars
+cd Mars
+git init
+----------------------------------------------------------------------------------------------------------------------------------
+# Staging a files 
+echo hello > file1.txt
+echo hello > file2.txt
+git status 
+git add *.txt
+git add file1.txt <file names>
+git add . 
+// Add command is use to stage something in staging area 
+Check track file
+git status
+----------------------------------------------------------------------------------------------------------------------------------
+# Committing Changes
+git commit -m "Initial Commit"
+git commit -m 
+// This will open a default editor to add commit message with description
+// Add and commit in same line
+----------------------------------------------------------------------------------------------------------------------------------
+# Skipping the staging area
+// Modifying file1.txt
+echo python >> file1.txt
+// Only use when you are 100% sure that you don't need to review a code
+git commit -am "add and commit"
+----------------------------------------------------------------------------------------------------------------------------------
+# Removing Files
+// Removing file2 because we don't any more
+rm file2.txt
+// "rm" will remove file2.txt file but it still  contain in staging area lets check to prove
+git status
+// If you want to check that file2.txt is still in staging area run below command
+git ls-files
+// To remove from staging run this command
+git add file2.txt
+// Finally commit changes 
+git commit -m "File2 remove"
+git ls-files
+// Check again now file2.txt is no longer in staging as well
+// Instead of unix command rm git provide "git rm" to remove from directory as well as staging are
+// Remove from directory as well as staging area
+git rm file2.txt
+// It will remove from both directory and in staging area
+----------------------------------------------------------------------------------------------------------------------------------
+# Renaming or moving files
+// "mv" is a standard unix command
+mv file1.txt main.js
+git status
+// It will rename file1.txt to main.js
+git add main.js
+// It will remove file1.txt and stage main.js in staging area 
+// Now use instead of standard unix command we use "git mv"
+git mv main.js file1.txt
+// With this command git will rename in directory as well as in staging area we don't need to run this command
+// git add file1.txt
+----------------------------------------------------------------------------------------------------------------------------------
+#Ignoring files
+mkdir logs
+// Creating a directory name logs
+echo Hello > logs/dev.log
+// Creating a new file dev.log and writing Hello which is inside of logs/ directory 
+git status
+// It will show us untracked logs/ directory
+echo logs/ > .gitignore 
+// To ignore logs/ directory we simple add a new file name .gitignore and write logs/ directory to it
+git status
+// Now when you check again it will no longer tell you about untracked logs/ directory because it is ignore by .gitignore
+git add .gitignore 
+// Add to staging area
+git commit -m "Add gitignore"
+// lets Commit 
+// When you accidentally committed something than git will not ignore in gitignore file lets have a look
+mkdir bin
+// Creating a bin directory
+echo Hello > bin/app.bin
+// writing hello to app.bin file inside a bin directory
+git add .
+// Accidentally add to staged file
+git commit -m "Add Bin"
+// Accidentally committed 
+echo bin/ >> .gitignore
+// Adding to gitignore after commit
+git add .
+git commit -m "Include bin / in gitignore"
+// Again now modify app.bin to check git ignore or not
+echo Helloworld >> bin/app.bin
+git status
+// git will say bin/app.bin in modified means git is not ignoring
+// Why we this because app.bin file was in staging area
+git ls-files
+// We can easily see in staging area
+// We want to remove only in staging area not in working directory
+git rm -h
+// We want to see help
+git rm --cached -r bin/
+// This command will remove bin/ directory in staging area not in working area lets verify
+git ls-files
+----------------------------------------------------------------------------------------------------------------------------------
+# Short Status
+git status -s 
+// We can use git status -s for short status
+echo sky >> moon/main.js
+// We simple append sky on main.js
+echo mountains > moon/file2.js
+// Simple create a file2.js inside moon directory and write mountains
+git status
+// In this sommand we can see modified files and untracked files in very detail
+git status -s
+// But with this command we can see short status
+like 
+```
+ M moon/main.js
+?? moon/file.js
+```
+//  M means main.js is modified and we need to add it to update in staging area
+//  ?? double question mark means we have an untracked  file and we need to add it to place in staging area
+git add moon/main.js
+git status -s
+//  Now when we snap this file in staging area we can see output like this
+```
+M  moon/main.js 
+?? moon/file.js
+```
+// M in green color which means we have add and update in staging area 
+echo river >> moon/main.js
+// Now we  again append something on moon/main.js
+git status -s
+# output look like this
+```
+MM moon/main.js
+?? moon/file.js
+```
+// First M in green means last modified were already in staging are but Red M means we modifed something which is not in staging area
+git add moon/main.js
+// So lets add again in staging area to modify changes
+git status -s
+// Now the output is look like this
+```
+M  moon/main.js
+?? moon/file.js
+```
+git add  moon/file2.js
+// Add file to staging area
+git status -s
+```
+A  moon/file.js
+M  moon/main.js
+```
+// A means file.js is added in staging area
+// M in green means modified file added in staging arae
+----------------------------------------------------------------------------------------------------------------------------------
+# Viewing staged and unstaged changes
+// Check all files that is in staged (add <file names>) but not committed  we use "git diff --staged"
+git diff --staged
+// We can easily compare staging copy old copy  file with new file
+// Now with only "git diff' we can compare untracked copy with staging copy
+git diff
+// With this command we can compare untracked / unstaging changes
+----------------------------------------------------------------------------------------------------------------------------------
+# Visual Diff Tools
+// We use visual diff tools to compare files side by side
+// In this example we simply use vs code as diff tools
+// To configure we need to instructions as global level for all repositories
+git config --global diff.tool vscode
+// We simple set globally diff.tool as vscode Note vscode is just a name or tag
+git config --global difftool.vscode.cmd "code --wait --diff $LOCAl $REMOTE"
+// Now we tell git to open vs code editor for comparing files
+1. code (means default editor as vs code)
+2. --wait (means terminal will wait until we close vs code)
+3. --diff (is used for comparing files side by side)
+4. $LOCAL and $REMOTE (is just a placeholder for comparing old and new copy) 
+git config --global -e
+// This command is use to open vs code as editor
+git difftool 
+// This is used to comparing unstaging files or untracked files
+git difftool --staged
+// This is used for comparing unstaging files
+----------------------------------------------------------------------------------------------------------------------------------
+# Viewing a commit history
+git log
+// This log is used for comprehensive commit history
+git log --oneline
+// This is used for shorter history
+git log --oneline --reverse
+// This is used for shorter history but in reverse order
+----------------------------------------------------------------------------------------------------------------------------------
+# Viewing a commit Exactly
+// If we want to exatly see what we have change in a given commit 
+git log --oneline
+// Use for view commit history
+// I want to see exact content of a commit 
+// We can use 
+git show  <unique identifier or Head~1>
+// Lets see
+git show 6973451
+// This will show the commit exact changes using identifier 6973451
+git show Head~2
+// This will step down to Head of two previous steps 
+git show af7a9a4:.gitignore
+git show 01c9746:bin/app.bin
+// Seeing more detail
+git ls-tree Head~1
+// ls-tree (means list a files and directory as tree for specific Tree Data Structure)
+1. Blob for files
+2. Tree for directories
+// To see all the files and directories in a commit 
+git ls-tree Head~1:.gitignore
+----------------------------------------------------------------------------------------------------------------------------------
+# Unstaging Files
+Restore unstaging Files
+echo fishes >> moon/main.js
+// We just append or modified "moon/main.js"
+git add moon/main.js
+// We just add this modified changed to staging area
+// But we want to undo that changes inn staging area
+git restore --staged moon/main.js
+// To store the unstaing area we use above command
+----------------------------------------------------------------------------------------------------------------------------------
+# Discard Local Changes
+echo Programming >> moon/main.js
+lets we already modify moon/main.js and we want to restore last untracked changes we use
+git restore moon/main.js
+now lets we create a new file and write something
+echo Hello > moon/file3.js
+git status -s
+look we have untracked file file4.js to remove completely untracked file we use 
+git clean -h (for help)
+git clean --f file3.js
+----------------------------------------------------------------------------------------------------------------------------------
+# Restoring a file to an earlier version
+git rm moon/file.js
+// We romove from directory as well as staging area
+git commit -m "Remove file.js"
+// Comitted changes
+// Now we want to restore 
+git restore -h
+// For help
+git restore --source=HEAD~1 moon/file.js
+----------------------------------------------------------------------------------------------------------------------------------
+# Creating Snapshots with VScode
+----------------------------------------------------------------------------------------------------------------------------------
+# Summary of commands 
+----------------------------------------------------------------------------------------------------------------------------------
+# Exercise of Question 
+----------------------------------------------------------------------------------------------------------------------------------
+-------------Browsing History ---------------
+----------------------------------------------------------------------------------------------------------------------------------
+# Browsing History
+1. Search for commits (author, date, messages)
+2. View a commit
+3. Restore your project 
+4. Compare commits
+5. View the history of file
+6. Find a bad commit that introduce a bug 
+----------------------------------------------------------------------------------------------------------------------------------
+# Getting a repository
+// Look at the directory name "03_browsing_history" find venus zip file and extract it we will use this to learn about browsing history
+----------------------------------------------------------------------------------------------------------------------------------
+# Viewing the history
+// Lets learn bit more about "log" command
+
+git log
+
+// With this "git log" command we say see
+1. Unique identifier (07a10f93b3f6cde44fc72f0ad8f7cd7719caa9cb)
+2. Author Name (Muhammad Hashim)
+3. Author email (*****@gmail.com)
+4. Date (Mon May 6 00:43:15 2024 +0500)
+5. Commit messge (Creating Snapshots with vs code)
+
+git log --oneline 
+// With command  "git --oneline" gives us the summary in one line
+
+git log --oneline --stat
+if We want to see all the files that have been change in each commit git use "git log --oneline --stat"
+
+git log --stat 
+// Now we have full detail about each commit
+
+git log --oneline --patch
+//To See the actual change in each commit
+
+git log 3711212  --oneline --patch
+// To see the actual change in specific commit
+----------------------------------------------------------------------------------------------------------------------------------
+# Filtering the history 
+git log --oneline -3
+// if we want to see the last 3 commit
+
+git log --oneline --author="Muhammad Hashim"
+// Lets Filter by author name
+
+git log --after="2024-04-10"
+// Lets filter by date
+
+git log --after="yesterday" git log --after="one week ago"
+// We can also spicify by relative dates
+
+git log --oneline -S"see"
+// See all the commits that have the word "see" inside commit content
+
+git log --oneline -S"see" --patch
+// To see the exact change we can use
+
+git log --oneline 1e52e78..01ddb1f
+// If you want to see the range of coommit
+
+git log --oneline sections
+// See the commits by directory name
+git log --oneline sections/creating-snapshots/init.txt
+// See the commit by file 
+----------------------------------------------------------------------------------------------------------------------------------
+# Formatting the log output
+
+// Lets Customize the log
+git log --pretty=format:"Hey $an"
+// ouput will be Hey Muhammad Hashim "$an" author name
+
+git log --pretty=format:"%an committed %H"
+// Muhammad Hashim committed 06735275dd31d9d3e20a608bcf821fc3a93550c5
+
+git log --pretty=format:"Hey %an %h"
+// Hey Muhammad Hashim 0673527
+
+git log --pretty=format:"Hey %an %h"
+// Hey Muhammad Hashim on Tue Apr 30 12:47:34 2024 +0500
+
+git log --pretty=format:"%Cgreen%an%Creset committed %h on %cd"
+// author name will be green
+
+----------------------------------------------------------------------------------------------------------------------------------
+# Alias
+// lets Create Alias command for this
+git log --pretty=format:"%Cgreen%an%Creset committed %h on %cd"
+git config --global -e
+// Lets add new configurations for  config file
+
+git config --global alias.lg "log --pretty=format:'%Cgreen %an%Creset committed %h - %s'"
+----------------------------------------------------------------------------------------------------------------------------------
+# Viewing a Commit
+git Show HEAD~2
+// We are looking for the commit of Head two step down to previous commit
+
+git show HEAD~2 --name-only
+git show HEAD~2 --name-status
+----------------------------------------------------------------------------------------------------------------------------------
+# Viewing the changes across two commits
+
+// Lets see the changes of last two commits
+git diff HEAD~2 HEAD
+// Previous we use git diff to see the staged and unstaged changes
+git diff HEAD~2 HEAD --name-only
+git diff HEAD~2 HEAD --name-status
+----------------------------------------------------------------------------------------------------------------------------------
+# Checking out to a commit
+
+git log --oneline
+```
+07a10f9 (HEAD -> main, origin/main, origin/HEAD) Section One Summary
+25013ac Creating Snapshots with vs code
+3711212 Restoring a file to an earlier version
+92b324c Remove file.js
+51e351a Discarding Local Changes
+01ddb1f Unstaging Files
+b20af3f Setting oh my posh
+e98ccc1 Viewing exact commit content
+88b270e Viewing Commit History
+1e52e78 Visual Diff Tools
+6973451 Vieving staged and unstaged changes
+0673527 Short Status
+```
+// lets checkout to 
+git checkout b20af3f
+
+// By default master point to the last commit and Head pointer point to master but when we checkout Head will not point to master now don't commit
+
+git log --oneline
+//  some commits will be invisble bcz now head is poiting to "b20af3f"
+git log --oneline --all
+// To view all commits use "git log --oneline --all"
+git checkout master
+// finally chechout to master
+----------------------------------------------------------------------------------------------------------------------------------
+# Finding Bug using Bisect
+// With Biset we can quickly find bugs
+git biset start
+// This will start bisect 
+// You must provide good and bad commit
+// Tell get that current commit is bad commit which is Head pointing to last commit
+git bisect bad
+git log --oneline
+git bisect good ca49180
+git log --oneline --all
+git bisect good
+git log --oneline --all
+git bisect good
+git log --oneline --all
+git bisect bad
+git log --oneline --all
+git bisect bad
+git bisect reset
+----------------------------------------------------------------------------------------------------------------------------------
+# Finding Contributors using shortlog
+git shortlog
+git shortlog -h
+// git shortlog -h for help
+git shortlog -n
+----------------------------------------------------------------------------------------------------------------------------------
+# Viewing the history of a file
+git log <file name>
+git log --oneline <file name>
+----------------------------------------------------------------------------------------------------------------------------------
+# Restoring a deleting file
+// lets remove the file1.js
+git rm toc.txt
+git commit -m "Remove toc file"
+// Commit changes
+git log --oneline
+git log --oneline toc.txt
+// We could not find
+git log --oneline -- toc.txt
+git checkout a642e12 toc.txt
+// Checkout to previous commit and restore that file
+git status -s
+git commit -m "Restore toc file"
+----------------------------------------------------------------------------------------------------------------------------------
+# Finding the author of line using blame
+git blame audience.txt 
+// lets blame that file 
+git blame audience.txt 
+// blame by email
+git blame -e -L 1,2 audience.txt
+// filtering with line
+----------------------------------------------------------------------------------------------------------------------------------
+# Tagging
+// Lets tagging to a commit
+git tag v1.3 a642e12
+// now we can checkout with a tag
+git checkout v1.3
+// To see all the tags git tag 
+git tag
+// To create annotated tag that have some properties we use
+git tag -a v1.0 -m "Initial Tag for commit" ca49180
+git tag -n
+// see the tag message
+git show v1.0
+// we can see detail using tag
+git tag -d v1.0
+// For deleting we use 
+----------------------------------------------------------------------------------------------------------------------------------
+# Browsing a history using vs code
+----------------------------------------------------------------------------------------------------------------------------------
+# Summary
+----------------------------------------------------------------------------------------------------------------------------------
+# Exercise
+----------------------------------------------------------------------------------------------------------------------------------
+-------------Browsing History ---------------
+What we learn
+1. Use branches
+2. Compare branches
+3. Merge branches
+4. Resolve conflicts
+5. Undo a faulty Merge
+6. Essential tool (stashing, cherry picking)
+----------------------------------------------------------------------------------------------------------------------------------
+# What are branches
+----------------------------------------------------------------------------------------------------------------------------------
+# Getting a repository
+----------------------------------------------------------------------------------------------------------------------------------
+# Working with branches
+----------------------------------------------------------------------------------------------------------------------------------
+// lets first see the all branches
+git branch
+// Currently we only have "Master" branch lets first create a new branch assume we want to fix some bug so we need to create a new branch to separate the code to create isolate level
+// lets create a branch name "BugFix"
+git branch Bugfix
+// Now to see all the branch use "git branch"
+git branch
+```
+  BugFix
+* master
+```
+// look we have now new branch, we need to switch to new branch i.e. "BugFix"
+git switch Bugfix
+```
+    Switched to branch 'Bugfix'
+```
+// Now again check where we were now
+git branch
+```
+* BugFix
+  master
+```
+// See are now currently in BugFix branch
+// we can also use "git status" to see the current branch name
+git status 
+```
+    On branch Bugfix
+    nothing to commit, working tree clean
+```
+// Before going forward we need to rename this branch name "BugFix" to someone else because its not clear what bug we are fixing, so it is better to use more specific. Lets see we used "bugfix-logout-form", to rename the branch name we use.
+git branch -m BugFix bugfix-logout-form
+// look we have renamed our branch successfully
+git branch
+```
+* bugfix-logout-form
+  master
+```
+// Now lets make a few changes in this new branch 
+// lets open  audience.txt file
+code audience.txt
+add these lines 
+```
+Hey there, we are in new bug fix branch
+and we are going to add some changes
+```
+// Now lets add to staging area and commit it.
+git add audience.txt
+git commit -m "Fix the bug that prevented the users from logout"
+// Now lets check the logs
+git log --online
+```
+98ec5af (HEAD -> bugfix-logout-form) Fix the bug that prevented the users from logout
+a642e12 (master) Add header to all pages.
+50db987 Include the first section in TOC.
+555b62e Include the note about committing after staging the changes.
+91f7d40 Explain various ways to stage changes.
+edb3594 First draft of staging changes.
+24e86ee Add command line and GUI tools to the objectives.
+36cd6db Include the command prompt in code sample.
+9b6ebfd Add a header to the page about initializing a repo.
+fa1b75e Include the warning about removing .git directory.
+dad47ed Write the first draft of initializing a repo.
+fb0d184 Define the audience.
+```
+// Look HEAD is now pointing to  "bugfix-logout-form" it means git version control is not creating a saparate copy of "master" branch
+// Now lets switch to master branch again and check the logs
+// See all the changes are gone because we are in sparate master branch isolation, 
+git switch master
+git log --oneline
+```
+a642e12 (HEAD -> master) Add header to all pages.
+50db987 Include the first section in TOC.
+555b62e Include the note about committing after staging the changes.
+91f7d40 Explain various ways to stage changes.
+edb3594 First draft of staging changes.
+24e86ee Add command line and GUI tools to the objectives.
+36cd6db Include the command prompt in code sample.
+9b6ebfd Add a header to the page about initializing a repo.
+fa1b75e Include the warning about removing .git directory.
+dad47ed Write the first draft of initializing a repo.
+fb0d184 Define the audience.
+1ebb7a7 Define the objectives.
+```
+// Look we dont't see the new commit in "bugfix-logout-form" branch to see the new commit use this command.
+git log --oneline --all
+```
+98ec5af (bugfix-logout-form) Fix the bug that prevented the users from logout
+a642e12 (HEAD -> master) Add header to all pages.
+50db987 Include the first section in TOC.
+555b62e Include the note about committing after staging the changes.
+91f7d40 Explain various ways to stage changes.
+edb3594 First draft of staging changes.
+24e86ee Add command line and GUI tools to the objectives.
+36cd6db Include the command prompt in code sample.
+9b6ebfd Add a header to the page about initializing a repo.
+fa1b75e Include the warning about removing .git directory.
+dad47ed Write the first draft of initializing a repo.
+fb0d184 Define the audience.
+1ebb7a7 Define the objectives.
+ca49180 Initial commit.
+```
+// Now look we can see new commit in saparate branch.
+// Lets see we fix the bug but without merge we are trying to delete
+git branch -d bugfix-logout-form
+// look we see this error
+```
+error: The branch 'bugfix-logout-form' is not fully merged.
+If you are sure you want to delete it, run 'git branch -D bugfix-logout-form'.
+```
+// What does its means? well git is preventing and  giving an error that you changed something but without merging you are trying to delete a branch
+// So to delete forecefully we use
+git branch -D bugfix-logout-form
+```
+Deleted branch bugfix-logout-form (was 98ec5af).
+```
+// Now we forefully deleted the branch.
+----------------------------------------------------------------------------------------------------------------------------------
+# Comparing branches
+// first we need to switch to master branch
+git switch master
+// Now we need to check all the commits that is not in master branch
+git log --oneline master..bugfix
+// bugfix is new branch that have two commits 
+```
+11deb71 (bugfix) Fixed newly bug
+e2f7a41 Bug fixed
+```
+// if we want to see actual changes in bugfix commits
+git diff master..bugfix
+```
+diff --git a/audience.txt b/audience.txt
+index 4cfef55..c01b824 100644
+--- a/audience.txt
++++ b/audience.txt
+@@ -1,4 +1,16 @@
+ AUDIENCE
+
+ This course is for anyone who wants to learn Git.
+-No prior experience is required.
+\ No newline at end of file
++No prior experience is required.
++
++Welcome to venus bugfix branch
++
++....................
++.................
++.............
++.........
++......
++....
++..
++.
++Another new changes
+\ No newline at end of file
+```
+// Look currently we are already in master branch so there is a shorthand to see all the bugfix exact changes
+git diff bugfix
+git diff --name-only  bugfix
+// some time we oonly want to see which file changes
+git diff --name-status  bugfix
+// we can also see status
+----------------------------------------------------------------------------------------------------------------------------------
+# Stashing
+// lets switch to bugfix branch
+git switch bugfix
+// lets make some changes 
+echo Hello >> audienct.txt
+// Now lets switch to master without adding to staging or committing
+git switch master
+```
+error: Your local changes to the following files would be overwritten by checkout:
+        audience.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+```
+// What is stashing?
+// Stashing means storing it in a safe place, so we can switch back add it in staging, Note stash is not storing in staging area
+git stash push -m "New line Hello added in stash area"
+```
+Saved working directory and index state On bugfix: New line Hello added in stash area
+```
+// Note stash will not add automatically something
+// lets create a new file
+echo Hi > file.txt
+git status -S
+// This is a new untracked file to add in stash with message we use
+git stash -am "My new stash"
+```
+Saved working directory and index state On bugfix: My new stash
+```
+//to see the stash list
+git stash list 
+```
+stash@{0}: On bugfix: My new stash
+stash@{1}: On bugfix: New line Hello added in stash area
+```
+// Now lets swtch to master 
+git switch master
+```
+Switched to branch 'master'
+```
+// After done something lets switch to bugfix branch
+// Now we know the stash number we can use this
+git stash show 1
+```
+audience.txt | 2 +-
+1 file changed, 1 insertion(+), 1 deletion(-)
+```
+//  lets now apply stash to staging area use
+git stash apply 1
+```
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   audience.txt
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+// lets drop stash 1
+git stash drop 1
+```
+Dropped refs/stash@{1} (a28d97d5c3c0a857f32b0e312cbf0213a236e19e)
+```
+git stash list 
+to remove all the stash 
+git stash clear
+----------------------------------------------------------------------------------------------------------------------------------
+# Merging
+// Two types of merge
+1. Fast forward merge
+2. 3-way merge
+
+**Fast-forward merge:**
+- Occurs when the branch being merged has all commits accessible from the branch you're merging into.
+- Git simply moves the pointer of the branch you're merging into forward to the same commit as the branch you're merging.
+- It's fast because it doesn't involve creating a new merge commit.
+- Typically happens in linear histories.
+
+**3-way merge:**
+- Happens when there are divergent changes in both branches being merged.
+- Git finds the common ancestor commit of both branches and compares the changes made in each branch since that common ancestor.
+- It then combines these changes into a new merge commit, integrating the changes from both branches.
+- This type of merge is necessary to reconcile conflicting changes and create a new unified state.
+----------------------------------------------------------------------------------------------------------------------------------
+# Fast Forward Merges
+// lets first look all the commits 
+git log --oneline --all --graph
+```
+* b07884d (bugfix) Added new changes
+* a642e12 (HEAD -> master) Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the object
+```
+// now we want to merge using fast forward with master we need to switch to master first
+git switch master
+git merge bugfix 
+```
+Updating a642e12..b07884d
+Fast-forward
+ audience.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+```
+// by default fast forward merge is applied because we have linear path
+git log --oneline --all --graph
+```
+* b07884d (HEAD -> master, bugfix) Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// Now lets create a new branch and made some changes and merge it but in this time we don't use no fast forward merge
+// But this time we use shorthand to quickly create and switch
+git branch -d bugfix
+git switch -C bugfix/about
+git add >> audience.txt
+git add audience.txt
+git commit -m "Updated audience file"
+git switch master
+```
+Switched to a new branch 'bugfix/about'
+```
+git log --oneline --all --graph
+```
+* c34c6bb (bugfix/about) Updated toc
+* b07884d (HEAD -> master) Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// Now lets merge new branch using no fast forward 
+git merge --no-ff bugfix/about
+// This will create a new merge commit 
+```
+Merge made by the 'ort' strategy.
+ audience.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+```
+git log --oneline --all --graph
+```
+*   d48d735 (HEAD -> master) Merge branch 'bugfix/about'
+|\
+| * c34c6bb (bugfix/about) Updated toc
+|/
+* b07884d Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// To disable fast forwrad merge for current repository
+git config ff no
+// To disable fast forwrad merge for all repository
+git config --global ff no
+---------------------------------------------------------------------------------------------------------------------------------
+# Three way merges
+git log --oneline --all --graph
+```
+*   d48d735 (HEAD -> master) Merge branch 'bugfix/about'
+|\
+| * c34c6bb (bugfix/about) Updated toc
+|/
+* b07884d Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// lets create a new feature branch and made come changes
+git switch -C feature/password
+// Add some changes
+echo *********** > password.txt
+git add .
+git commit -m "Password Feature Added"
+git log --oneline --all --graph
+```
+* d203fc8 (HEAD -> feature/password) Password Feature Added
+*   d48d735 (master) Merge branch 'bugfix/about'
+|\
+| * c34c6bb (bugfix/about) Updated toc
+|/
+* b07884d Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+```
+git switch master
+// made some changes
+echo Hello >> objectives.txt
+git add .
+git commit -m "Updated objective.txt"
+git log --oneline --all --graph
+```
+* 2902f6f (HEAD -> master) Updated objective.txt
+| * d203fc8 (feature/password) Password Feature Added
+|/
+*   d48d735 Merge branch 'bugfix/about'
+|\
+| * c34c6bb (bugfix/about) Updated toc
+|/
+* b07884d Added new changes
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+git merge feature/password
+---------------------------------------------------------------------------------------------------------------------------------
+# Viewing merge and unmerge branches
+// Sometimes we merges branches and forget to delete, so too see all the branches that have been merge with master we use
+git branch --merged
+```
+  bugfix/about
+  feature/password
+* master
+```
+// lets delete
+git branch -d bugfix/about
+git branch -d feature/password
+// To the branches that have not been merged
+git branch --no-merged
+---------------------------------------------------------------------------------------------------------------------------------
+# Merge conflict
+git switch -C feature/change-password
+code password.txt
+// lets add "change in the bugfix branch" in the end of  password.txt
+git status -s
+git add .
+git commit -m "Change password updated"
+ git switch master
+code password.txt
+// lets add "change in the bugfix branch" in the end of  password.txt
+git status -s
+git add .
+git commit -m "Change password updated"
+git merge feature/change-password
+```
+Auto-merging password.txt
+CONFLICT (content): Merge conflict in password.txt
+Automatic merge failed; fix conflicts and then commit the result.
+```
+git status
+
+```
+ On branch master
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+        both modified:   password.txt
+```
+// lets aceept both changes
+git add .
+git commit -m "Accept both changes"
+---------------------------------------------------------------------------------------------------------------------------------
+# Graphical Merge Tool
+git switch -C bugfix
+code audience.txt
+// Add 'This is bugfix'
+git add .
+git commit -m "Bugfix"
+git switch master
+// Add 'This is master'
+git add .
+git commit -m "master"
+// Now when we merge
+git merge master 
+// We want to open default graphical tool 'p4merge' to merge in graphical way
+// lets configer p4merge
+git config --global merge.tool p4merge
+// Next tell git where to find p4merge tool
+git config --global mergetool.p4merge.path "C:\Program Files\Perforce\p4merge"
+---------------------------------------------------------------------------------------------------------------------------------
+# Aborting a mwrge 
+// Sometime we are not reading to handle merge conflict, and in the middle we want to abort or cancel a merge conflict
+git switch -C bugfix
+code audience.txt
+// Add 'This is bugfix'
+git add .
+git commit -m "Bugfix"
+git switch master
+// Add 'This is master'
+git add .
+git commit -m "master"
+// Now when we merge
+git merge master 
+// to cancel a merge 
+git merge --abort
+---------------------------------------------------------------------------------------------------------------------------------
+# Undoing a faulty merge
+// sometimes we merge something and we find our code is not working properly, in this situation we undo a merge and then remerge
+// lets look history
+git log --oneline --all --graph
+```
+*   ad4f937 (HEAD -> master) Merge branch 'bugfix'
+|\
+| * d0e95c0 (bugfix) Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// lets see this is a faulty merge " ad4f937 (HEAD -> master) Merge branch 'bugfix'"
+// So we want to undo a merge we have two options
+// One option is remove this commit as it was never there, but you have to becareful with this solution because as part of removing this commit we are rewriting history, rewriting history is totally fine if this history is local in our repository, but you have shared our commits with other team members. or if you have pushed our commits to remote repository, then we should not rewrite our history. 
+// Other option is instead of removing this commit we should revert it which means we create a new commit that will cancel all the changes in previous commit. 
+// Lets look both this solutions
+
+// Option One
+# remove the last commit 
+git log --oneline --all --graph
+*   ad4f937 (HEAD -> master) Merge branch 'bugfix'
+|\
+| * d0e95c0 (bugfix) Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+git reset --hard HEAD~1
+```
+* 4404bdd (HEAD -> master) audience
+* d7d7464 master
+* 84d855e master branch
+| * d0e95c0 (bugfix) Commit passwords
+| * 49a023f Bugfix branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+//Details:
+
+--hard: This option is used when you want to completely discard all changes in the working directory and the staging area, effectively resetting the repository to the state of the specified commit. This is destructive and should be used with caution.
+
+--soft: This option keeps your changes in both the working directory and the staging area, but moves the HEAD pointer to the specified commit. This is useful when you want to undo a commit but keep your changes for further modifications or a new commit.
+
+--mixed: This is the default option if no parameter is specified. It resets the commit history to the specified commit and keeps your changes in the working directory but clears the staging area. This is useful when you want to unstage changes without discarding them.
+
+// look 'merge branch' commit is no longer here but we can recover it
+git reset --hard ad4f937
+```
+HEAD is now at ad4f937 Merge branch 'bugfix'
+```
+git log --oneline --all --graph
+```
+*   ad4f937 (HEAD -> master) Merge branch 'bugfix'
+|\
+| * d0e95c0 (bugfix) Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// Note we undo commit use only if you have not shared this we anyone
+
+# Option Two
+// But if you shared your history with someone then instead of undoing we should use revert the last commit 
+git revert HEAD
+```
+error: commit ad4f937b752ab7c24b241ccd6d7beafe5d065cd7 is a merge but no -m option was given.
+fatal: revert failed
+```
+// Why we got this type of error? well you this last commit have two parents, one parent on the master branch and two parent on the bugfix branch
+git revert -m 1 HEAD
+```
+[master 56ea239] Revert "Merge branch 'bugfix'" 
+ 2 files changed, 1 insertion(+), 3 deletions(-)
+ delete mode 100644 password.txt
+```
+git log --oneline --all --graph
+```
+* 56ea239 (HEAD -> master) Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 (bugfix) Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+---------------------------------------------------------------------------------------------------------------------------------
+# Squash Merging
+// We use squash merge to combine multiple commits from a feature branch into a single commit before merging into the main branch. This helps keep the commit history clean and concise, making it easier to track changes. Squash merging is particularly useful for consolidating numerous small or experimental commits into a coherent commit message.
+
+git switch -C bugfix/photo-upload
+```
+Switched to a new branch 'bugfix/photo-upload'
+```
+echo bugfix >> audience.txt
+git commit -am "update audience.txt"
+```
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+echo bugfix >> toc.txt
+git commit -am "update toc.txt"
+```
+1 file changed, 1 insertion(+), 1 deletion(-)
+```
+git log --oneline --all --graph
+```
+* b9d8cbd (HEAD -> bugfix/photo-upload) update toc.txt
+* 1770ea9 update audience.txt
+* 56ea239 (master) Revert "Merge branch 'bugfix'"     
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// Now we use a squash merge instead of fast forward
+git switch master
+git merge --squash bugfix/photo-upload
+```
+Updating 56ea239..b9d8cbd
+Fast-forward
+Squash commit -- not updating HEAD
+ audience.txt | 2 +-
+ toc.txt      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+```
+git status -s
+```
+M  audience.txt
+M  toc.txt     
+```
+we need to add and commit
+git commit -am "Squash Merge"
+```
+[master 2ced86d] Squash Merge
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+```
+git log --oneline --all --graph
+```
+* 2ced86d (HEAD -> master) Squash Merge
+| * b9d8cbd (bugfix/photo-upload) update toc.txt
+| * 1770ea9 update audience.txt
+|/
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\  
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/  
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+it branch -D bugfix/photo-upload
+git log --oneline --all --graph
+```
+* 2ced86d (HEAD -> master) Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.       
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+---------------------------------------------------------------------------------------------------------------------------------
+# Rebasing
+// Rebasing in Git is the process of moving or combining a sequence of commits to a new base commit. This is typically done to integrate changes from one branch into another, making the commit history linear and more readable by avoiding unnecessary merge commits.
+
+// Why Use Rebasing Only in Local Repository?
+// History Rewriting: Rebasing rewrites commit history, which can change commit hashes. If you rebase and then push to a shared branch, it can cause confusion and conflicts for others who have based their work on the original commits.
+Collaboration Issues: When working in a shared repository, others might have already pulled the original commits. Rebasing those commits can lead to a complex and error-prone merge process for them.
+// Safer Local Experimentation: Rebasing is safer to perform locally because it allows you to clean up and reorganize your commits before sharing them, ensuring that the public commit history remains clean and stable.
+
+git switch -C feature/shpping-cart
+```
+Switched to a new branch 'feature/shpping-cart'
+```
+echo Hello > cart.txt
+git add .
+git commit -m "Add cart.txt"
+git log --oneline --all --graph
+```
+* 57430d3 (HEAD -> feature/shpping-cart) Add cart.txt
+* 2ced86d (master) Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+git switch master
+```
+Switched to branch 'master'
+```
+echo Hello >> toc.txt
+git commit -am "update toc"
+git log --oneline --all --graph
+```
+* 16b1403 (HEAD -> master) update toc
+| * 57430d3 (feature/shpping-cart) Add cart.txt
+|/
+* 2ced86d Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/  
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+// To rebase the branch first we need to switch to target branch
+git switch feature/shpping-cart
+git rebase master
+```
+Successfully rebased and updated refs/heads/feature/shpping-cart.
+```
+git log --oneline --all --graph
+```
+* 9340bfd (HEAD -> feature/shpping-cart) Add cart.txt
+* 16b1403 (master) update toc
+* 2ced86d Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+git switch master
+git merge feature/shpping-cart
+```
+Updating 16b1403..9340bfd
+Fast-forward
+ cart.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 cart.txt  
+```
+git log --oneline --all --graph
+```
+* 9340bfd (HEAD -> master, feature/shpping-cart) Add cart.txt
+* 16b1403 update toc
+* 2ced86d Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/  
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+```
+
+// If there is conflict? how the rebase will work?
+git branch
+```
+  feature/shpping-cart
+* master
+```
+echo occean >> toc.txt
+git commit -am "Update toc.txt"
+git switch feature/shpping-cart
+echo mountains >> toc.txt
+git commit -am "add mountains in toc.txt"
+git log --oneline --all --graph
+```
+* 81c8fb8 (HEAD -> feature/shpping-cart) add mountains in toc.txt
+| * 4e252ae (master) Update toc.txt
+|/
+* 9340bfd Add cart.txt
+* 16b1403 update toc
+* 2ced86d Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+```
+git rebase master
+```
+Auto-merging toc.txt
+CONFLICT (content): Merge conflict in toc.txt
+error: could not apply 81c8fb8... add mountains in toc.txt
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+Could not apply 81c8fb8... add mountains in toc.txt
+```
+git mergetool
+ git rebase --continue
+``` 
+[detached HEAD 15cdad7] add mountains in toc.txt
+1 file changed, 1 insertion(+), 1 deletion(-)  
+Successfully rebased and updated refs/heads/feature/shpping-cart.
+```
+git status -s
+``
+?? toc.txt.orig
+```
+cat toc.txt.orig
+```
+rm toc.txt.orig
+// to prevent in future not to create backup file
+git config --global mergetool.keepBackup false
+---------------------------------------------------------------------------------------------------------------------------------
+# Cherry picking 
+// Cherry-picking in Git is the process of selecting specific commits from one branch and applying them to another branch. This allows you to incorporate particular changes without merging entire branches. It's useful for backporting bug fixes or features to different branches without bringing in unrelated changes.
+git log --oneline --all --graph
+```
+* 15cdad7 (HEAD -> feature/shpping-cart) add mountains in toc.txt
+* 4e252ae (master) Update toc.txt
+* 9340bfd Add cart.txt
+* 16b1403 update toc
+* 2ced86d Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+* 555b62e Include the note about committing after staging the changes.
+* 91f7d40 Explain various ways to stage changes.
+* edb3594 First draft of staging changes.
+* 24e86ee Add command line and GUI tools to the objectives.
+* 36cd6db Include the command prompt in code sample.
+* 9b6ebfd Add a header to the page about initializing a repo.
+* fa1b75e Include the warning about removing .git directory.
+* dad47ed Write the first draft of initializing a repo.
+* fb0d184 Define the audience.
+* 1ebb7a7 Define the objectives.
+* ca49180 Initial commit.
+```
+git switch master
+git cherry-pick 15cdad7
+```
+[master 8962751] add mountains in toc.txt
+ Date: Sun May 19 01:23:11 2024 +0500
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+git log --oneline --all --graph
+```
+* 8962751 (HEAD -> master) add mountains in toc.txt        
+| * 15cdad7 (feature/shpping-cart) add mountains in toc.txt
+|/
+* 4e252ae Update toc.txt
+* 9340bfd Add cart.txt
+* 16b1403 update toc
+* 2ced86d Squash Merge
+* 56ea239 Revert "Merge branch 'bugfix'"
+*   ad4f937 Merge branch 'bugfix'
+|\
+| * d0e95c0 Commit passwords
+| * 49a023f Bugfix branch
+* | 4404bdd audience
+* | d7d7464 master
+* | 84d855e master branch
+|/
+* a642e12 Add header to all pages.
+* 50db987 Include the first section in TOC.
+```
+---------------------------------------------------------------------------------------------------------------------------------
+# Picking a latest file in another branch without full commit
+git switch -C send-mail
+echo river >> toc.txt
+git commit -am "river"
+git switch master
+git restore --source=send-mail -- toc.txt
+---------------------------------------------------------------------------------------------------------------------------------
+# Gitlens
+// Gitlens is used for work with branches
+---------------------------------------------------------------------------------------------------------------------------------
+# Summaries
+---------------------------------------------------------------------------------------------------------------------------------
+# Exercises
+---------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------
+-------------Collaborating ---------------
+What we learn
+1. Collaborating workflows
+2. pushing, pulling and fetching
+3. Pull requests, issues and milestones
+4. Contributing to open source projects
+----------------------------------------------------------------------------------------------------------------------------------
+# Workflow
+----------------------------------------------------------------------------------------------------------------------------------
+# Creating a github repository
+----------------------------------------------------------------------------------------------------------------------------------
+# Cloning a repository
+----------------------------------------------------------------------------------------------------------------------------------
+# Fetching repository
+----------------------------------------------------------------------------------------------------------------------------------
+# Pulling
+----------------------------------------------------------------------------------------------------------------------------------
+# Pushing
+----------------------------------------------------------------------------------------------------------------------------------
+# Storing Credentials
+----------------------------------------------------------------------------------------------------------------------------------
+# Tags
+----------------------------------------------------------------------------------------------------------------------------------
+# Releases
+----------------------------------------------------------------------------------------------------------------------------------
+# Sharing Branches
+----------------------------------------------------------------------------------------------------------------------------------
+# Pull requests
+----------------------------------------------------------------------------------------------------------------------------------
+# Resolving conflicts
+----------------------------------------------------------------------------------------------------------------------------------
+# Issues
+----------------------------------------------------------------------------------------------------------------------------------
+# Custom Labels
+----------------------------------------------------------------------------------------------------------------------------------
+# Milestoone
+----------------------------------------------------------------------------------------------------------------------------------
+# Fork repository up to date
+----------------------------------------------------------------------------------------------------------------------------------
+# Summary
+----------------------------------------------------------------------------------------------------------------------------------
+# Exercises
+----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------
+------------- Rewriting histories ---------------
+What we learn
+1. Why and when to rewrite history
+2. undo or revert commit
+3. Use interactive rebasing
+4. Recover lost commits
+----------------------------------------------------------------------------------------------------------------------------------
+# Why rewriting history?
+----------------------------------------------------------------------------------------------------------------------------------
+# Golden rule of rewriting history?
+----------------------------------------------------------------------------------------------------------------------------------
+# Example of bad history
+----------------------------------------------------------------------------------------------------------------------------------
+# undoing commits
+----------------------------------------------------------------------------------------------------------------------------------
+# Reverting commits
+----------------------------------------------------------------------------------------------------------------------------------
+# Reverting lost commits
+----------------------------------------------------------------------------------------------------------------------------------
+# Amending the last commits
+----------------------------------------------------------------------------------------------------------------------------------
+
+-------------Setting up Oh My Posh in windows ---------------
+----------------------------------------------------------------------------------------------------------------------------------
+# Setting up oh my posh for windows
+1. Simply open your windows powershell and run as a administrator and paste this command
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
+```
+2. For updating if need then run this command to powershell
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
+```
+3. open your git bash terminal  and create a new empty bash_profile
+```
+touch ~/.bash_profile
+```
+4. Once we created empty bash_profile we will edit in a sec but once let me finish to create a new theme file as json format
+5. Simple go to oh my posh theme page
+```
+https://ohmyposh.dev/docs/themes
+```
+6. Select your favoirite theme in my case i select iterm2
+7.Now i will provide you a github oh my posh theme section json file link simple you need copy and paste
+```
+https://github.com/JanDeDobbeleer/oh-my-posh/tree/main/themes
+```
+8. Select your favourite i will stick to iterm 
+9. I attach json file in directory section you can save in safe location like in my case i save in user>>dell>>iterm.omp.json
+10. Once again open git bash, and tell to bash to open .bash_profile in vs code you can open in any editor and paste your command 
+```
+code ~/.bash_profile
+```
+11. Once open in vs code paste this command
+```
+eval "$(oh-my-posh init bash --config /c/Users/DELL/iterm2.omp.json)"
+```
+12. In my case the location is /c/Users/DELL/iterm2.omp.json
+----------------------------------------------------------------------------------------------------------------------------------
