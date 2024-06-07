@@ -1,125 +1,116 @@
-# Three way merges
+### Explanation
 
-1. **Viewing Commits Graphically:**
+A three-way merge in Git is a method to merge two branches that have diverged. Unlike a fast-forward merge, a three-way merge requires Git to create a new merge commit because there are changes in both branches that need to be combined.
 
-    Command:
-    ```bash
-    git log --oneline --all --graph
-    ```
+The "three-way" refers to the three commits that Git uses to perform the merge:
 
-    Output:
-    ```plaintext
-    *   d48d735 (HEAD -> master) Merge branch 'bugfix/about'
-    |\
-    | * c34c6bb (bugfix/about) Updated toc
-    |/
-    * b07884d Added new changes
-    * a642e12 Add header to all pages.
-    * ... (other commits)
-    ```
+1. The common ancestor of the two branches (the base).
+2. The tip (latest commit) of the current branch (HEAD).
+3. The tip (latest commit) of the branch being merged.
 
-    Explanation:
-    This command displays a graphical representation of all commits, showing the branches and their relationships.
+### Example Demonstration
 
-2. **Creating and Making Changes in Feature Branch:**
+Let's create an example from scratch to demonstrate a three-way merge.
 
-    Commands:
-    ```bash
-    git switch -C feature/password
-    echo "***********" > password.txt
-    git add .
-    git commit -m "Password Feature Added"
-    git log --oneline --all --graph
-    ```
+#### Step-by-Step Example:
 
-    Output:
-    ```plaintext
-    * d203fc8 (HEAD -> feature/password) Password Feature Added
-    *   d48d735 (master) Merge branch 'bugfix/about'
-    |\
-    | * c34c6bb (bugfix/about) Updated toc
-    |/
-    * b07884d Added new changes
-    * a642e12 Add header to all pages.
-    * ... (other commits)
-    ```
+1. **Initialize a Git repository:**
 
-    Explanation:
-    - `git switch -C feature/password`: Creates a new branch named `feature/password` and switches to it.
-    - `echo "***********" > password.txt`, `git add .`, `git commit -m "Password Feature Added"`: Adds and commits changes to `password.txt`.
+```bash
+mkdir git-three-way-merge-demo
+cd git-three-way-merge-demo
+git init
+```
 
-3. **Switching Back to Master and Making Changes:**
+2. **Create a `main` branch and make an initial commit:**
 
-    Commands:
-    ```bash
-    git switch master
-    echo "Hello" >> objectives.txt
-    git add .
-    git commit -m "Updated objective.txt"
-    git log --oneline --all --graph
-    ```
+```bash
+echo "Initial content" > file.txt
+git add file.txt
+git commit -m "Initial commit"
+```
 
-    Output:
-    ```plaintext
-    * 2902f6f (HEAD -> master) Updated objective.txt
-    | * d203fc8 (feature/password) Password Feature Added
-    |/
-    *   d48d735 Merge branch 'bugfix/about'
-    |\
-    | * c34c6bb (bugfix/about) Updated toc
-    |/
-    * b07884d Added new changes
-    * a642e12 Add header to all pages.
-    * ... (other commits)
-    ```
+3. **Create a `feature` branch and make a commit:**
 
-    Explanation:
-    - `git switch master`: Switches back to the `master` branch.
-    - `echo "Hello" >> objectives.txt`, `git add .`, `git commit -m "Updated objective.txt"`: Adds and commits changes to `objectives.txt`.
+```bash
+git checkout -b feature
+echo "Feature work" >> file.txt
+git add file.txt
+git commit -m "Add feature work"
+```
 
-4. **Merging Feature Branch into Master:**
+4. **Go back to the `main` branch and make another commit:**
 
-    Commands:
-    ```bash
-    git merge feature/password
-    ```
+```bash
+git checkout main
+echo "Main branch work" >> file.txt
+git add file.txt
+git commit -m "Add main branch work"
+```
 
-    Output:
-    ```plaintext
-    Auto-merging objectives.txt
-    CONFLICT (content): Merge conflict in objectives.txt
-    Automatic merge failed; fix conflicts and then commit the result.
-    ```
+Now, the history looks like this:
 
-    Explanation:
-    A merge conflict occurred because changes were made to the same file (`objectives.txt`) on both branches (`master` and `feature/password`).
+```
+* Commit 3 (main)
+|
+| * Commit 2 (feature)
+|/
+* Initial commit
+```
 
-5. **Resolving Merge Conflict:**
+5. **Merge `feature` branch into `main` with a three-way merge:**
 
-    Explanation:
-    To resolve the conflict, you would open the conflicted file (`objectives.txt`) in your text editor, manually resolve the conflicting lines, save the changes, and then add and commit the resolved file.
+```bash
+git checkout main
+git merge feature
+```
 
-6. **Viewing Commits Graphically After Merge Conflict:**
+Since both branches have diverged (they both have new commits since their common ancestor), Git performs a three-way merge. This process will create a new merge commit. The history will look like this:
 
-    Command:
-    ```bash
-    git log --oneline --all --graph
-    ```
+```
+*   Merge commit (main)
+|\
+| * Commit 2 (feature)
+|/
+* Commit 3 (main)
+|
+* Initial commit
+```
 
-    Output:
-    ```plaintext
-    *   1e98cf0 (HEAD -> master) Merge branch 'feature/password'
-    |\
-    | * d203fc8 (feature/password) Password Feature Added
-    * | 2902f6f Updated objective.txt
-    | * d48d735 Merge branch 'bugfix/about'
-    |\
-    | * c34c6bb (bugfix/about) Updated toc
-    |/
-    * b07884d Added new changes
-    * a642e12 Add header to all pages.
-    * ... (other commits)
-    ```
+### Resulting Merge Commit
 
-    Explanation:
-    The graph now shows the merge commit (`1e98cf0`) where the `feature/password` branch was merged into `master`, along with other commits.
+The merge commit includes changes from both the `main` and `feature` branches. If there are conflicts, Git will prompt you to resolve them manually.
+
+### Detailed Steps with Commands
+
+Here are all the commands combined to demonstrate the three-way merge:
+
+```bash
+# Initialize a Git repository
+mkdir git-three-way-merge-demo
+cd git-three-way-merge-demo
+git init
+
+# Create a main branch and make an initial commit
+echo "Initial content" > file.txt
+git add file.txt
+git commit -m "Initial commit"
+
+# Create a feature branch and make a commit
+git checkout -b feature
+echo "Feature work" >> file.txt
+git add file.txt
+git commit -m "Add feature work"
+
+# Go back to the main branch and make another commit
+git checkout main
+echo "Main branch work" >> file.txt
+git add file.txt
+git commit -m "Add main branch work"
+
+# Merge feature branch into main with a three-way merge
+git checkout main
+git merge feature
+```
+
+In this example, a three-way merge was necessary because both the `main` and `feature` branches had new commits since their common ancestor. Git used the common ancestor and the latest commits from both branches to create a new merge commit that combines the changes from both branches.
