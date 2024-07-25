@@ -55,6 +55,12 @@ git config --global core.autocrlf true
 ```
 *Explanation: This setting converts line endings to `\r\n` on checkout and back to `\n` on commit. This helps in maintaining consistent line endings across different environments.*
 
+#### 6. Configure Default Branch to Main
+```sh
+git config --global init.defaultBranch main
+```
+*Explanation: By default git create defualt branch to master, why we set default barnch to main because github version control hosting default branch is main.*
+
 ### Summary
 
 By configuring Git with your username, email, default editor, and line endings, you ensure that your commits are properly attributed, and you have a consistent development environment. 
