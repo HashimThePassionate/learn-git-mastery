@@ -1,5 +1,5 @@
 # 📚 Git Fundamentals
-
+ 
 ## 📸 Creating Snapshots
 
 Git is a powerful version control system that allows you to create snapshots of your project at different points in time. 📅 Below are some fundamental concepts you'll learn about creating snapshots in Git:
