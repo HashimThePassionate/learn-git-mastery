@@ -70,7 +70,7 @@ git config --global -e
 
 *This command opens the global Git configuration file in VS Code.*
 
-### 🔄 5. Configure Line Endings
+### 🔄 5. Configure Line Endings **[Read About CRLF](./crlf.md)**
 
 To avoid conflicts between different operating systems by normalizing line endings:
 
