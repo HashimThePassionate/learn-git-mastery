@@ -1,4 +1,4 @@
-# 📚 Git Version Control Tutorial
+# 📚 Git Version Control
 
 Welcome to the **Git Version Control Tutorial**! 🚀 In this guide, we'll delve into the powerful features of Git, a widely-used version control system that empowers developers to manage and track changes in their codebase effectively. Whether you're new to version control or aiming to strengthen your understanding, this tutorial will walk you through the essential concepts and best practices of using Git. 💻🔧
 
