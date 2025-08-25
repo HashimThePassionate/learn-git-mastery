@@ -1,62 +1,151 @@
-# 📚 Git Version Control
+<p align="center">
+  <img src="./assests/learn-git-mastery.png" alt="Learn Git Mastery Banner" width="600"/>
+</p>
 
-Welcome to the **Git Version Control Tutorial**! 🚀 In this guide, we'll delve into the powerful features of Git, a widely-used version control system that empowers developers to manage and track changes in their codebase effectively. Whether you're new to version control or aiming to strengthen your understanding, this tutorial will walk you through the essential concepts and best practices of using Git.
+<p align="center">
+  <img src="https://img.shields.io/github/license/HashimThePassionate/learn-git-mastery?style=for-the-badge&logo=open-source-initiative&logoColor=white" />
+  <img src="https://img.shields.io/github/repo-size/HashimThePassionate/learn-git-mastery?style=for-the-badge&logo=database&logoColor=white" />
+  <img src="https://img.shields.io/github/last-commit/HashimThePassionate/learn-git-mastery?style=for-the-badge&logo=git&logoColor=white" />
+  <img src="https://img.shields.io/github/stars/HashimThePassionate/learn-git-mastery?style=for-the-badge&logo=github" />
+</p>
 
-## 📑 Table of Contents
+---
 
-1. [**Introduction**](#-introduction) ✨
-2. [**What We Will Learn**](#-what-we-will-learn) 📖
-   - [1. Fundamental Concepts](#-1-fundamental-concepts) 🧩
-   - [2. Creating Snapshots](#-2-creating-snapshots) 📸
-   - [3. Browsing a Project History](#-3-browsing-a-project-history) 🔍
-   - [4. Branching and Merging](#-4-branching-and-merging) 🌿🔀
-   - [5. Collaborating Using GitHub](#-5-collaborating-using-github) 🤝
-3. [**Getting Started**](#-getting-started) 🏁
+# ✨ Why This Repo?  
+
+> **“Git mastery is not about memorizing commands – it’s about developing muscle memory through practice.”** 💡  
+
+<div align="center">
+
+| 📘 Tutorials | 🛠️ Hands-on | 🌍 Real-world | 🎯 Quizzes | 🤝 Collaboration |
+|--------------|------------|---------------|------------|-----------------|
+| Learn step by step | Practice as you go | Not just theory | Validate learning | Work like pros |
+
+</div>
+
+---
+
+## 📑 Table of Contents  
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th style="text-align:left;">#</th>
+      <th style="text-align:left;">Topic</th>
+      <th style="text-align:left;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>00</td>
+      <td>Getting Started 🏁</td>
+      <td>Install + Configure Git</td>
+    </tr>
+    <tr>
+      <td>01</td>
+      <td>Creating Snapshots 📸</td>
+      <td>Add, Commit, Track changes</td>
+    </tr>
+    <tr>
+      <td>03</td>
+      <td>Browsing History 🔍</td>
+      <td>Explore past commits</td>
+    </tr>
+    <tr>
+      <td>04</td>
+      <td>Branching 🌿</td>
+      <td>Branching & Merging</td>
+    </tr>
+    <tr>
+      <td>05</td>
+      <td>Collaboration 🤝</td>
+      <td>GitHub workflows</td>
+    </tr>
+    <tr>
+      <td>06</td>
+      <td>Rewriting History 🕰️</td>
+      <td>Rebase, Amend, Squash</td>
+    </tr>
+    <tr>
+      <td>07</td>
+      <td>Setup ⚙️</td>
+      <td>Oh My Posh custom prompt</td>
+    </tr>
+    <tr>
+      <td>08</td>
+      <td>Final Quiz 📝</td>
+      <td>Test your skills</td>
+    </tr>
+  </tbody>
+</table>
 
 
-## ✨ Introduction
 
-Welcome to the Git Version Control Tutorial! In this guide, we'll explore the robust features of Git, a cornerstone tool in modern software development. Git allows developers to efficiently manage and track changes in their projects, fostering collaboration and ensuring code integrity. Whether you're just starting or looking to deepen your Git knowledge, this tutorial has got you covered. 📘
+---
 
-## 📖 What We Will Learn
+## 🚀 Quick Start  
 
-### 🧩 1. Fundamental Concepts
+```bash
+# Clone this repo
+git clone https://github.com/HashimThePassionate/learn-git-mastery.git
 
-- **Introduction to Version Control** 📂: Grasp the basics of version control and its significance in software development.
-- **Git Basics** 🛠️: Understand core Git concepts, including repositories, commits, and the staging area.
-- **Installing Git** 📥: Follow step-by-step instructions to install Git on your system.
-- **Configuration** ⚙️: Set up your Git environment with your personal information for seamless tracking.
+# Move into the folder
+cd learn-git-mastery
 
-### 📸 2. Creating Snapshots
+# Start your journey
+code .
+````
 
-- **Creating a Repository** 🗂️: Initialize a new Git repository to start tracking your project.
-- **Tracking Changes** 📝: Learn how to add files to the staging area and commit changes effectively.
-- **Commit History** 📜: Discover how to view and interpret your commit history to monitor progress.
+---
 
-### 🔍 3. Browsing a Project History
+## 📖 What You’ll Learn
 
-- **Viewing Commits** 👀: Use Git commands to review past commits and understand your project's evolution.
-- **Comparing Changes** 🔄: Learn how to compare different file versions to identify changes.
-- **Undoing Changes** ↩️: Master techniques to revert or amend commits when necessary.
+✅ Version Control Basics <br/>
+✅ Git Snapshots & History <br/>
+✅ Branching & Conflict Resolution <br/>
+✅ Collaboration with GitHub <br/>
+✅ Rewriting History (Pro Level) <br/>
+✅ Custom Git Environment <br/>
+✅ Final Mastery Quiz
 
-### 🌿🔀 4. Branching and Merging
+---
 
-- **Branches** 🌱: Comprehend the concept of branches and how to create and manage them for parallel development.
-- **Switching Branches** 🔄: Learn how to navigate between branches to work on different features or fixes.
-- **Merging** 🔀: Understand how to merge changes from different branches and resolve any conflicts that arise.
+## 🤝 Contributing
 
-### 🤝 5. Collaborating Using GitHub
+We ❤️ contributions! Follow these steps:
 
-- **Introduction to GitHub** 🐙: Get acquainted with GitHub, a platform for hosting and collaborating on Git repositories.
-- **Remote Repositories** 🌐: Learn how to push your local repository to a remote server for backup and collaboration.
-- **Collaboration** 🤝: Discover how to clone repositories, submit pull requests, and manage contributions from multiple collaborators.
-- **Issues and Project Boards** 📋: Utilize GitHub features to track issues and manage project workflows efficiently.
+1. Fork this repo 🍴
+2. Create a feature branch 🌱
+3. Commit your changes 📝
+4. Open a Pull Request 🚀
 
-## 🏁 Getting Started
+<p align="center">
+  <img src="https://img.shields.io/github/issues/HashimThePassionate/learn-git-mastery?style=for-the-badge&logo=github"/>
+</p>
 
-Before diving into the tutorial, ensure that Git is installed on your machine. You can download Git from [here](https://git-scm.com/downloads). Follow the installation instructions specific to your operating system. 🖥️💾
+---
 
-Once Git is installed, you're all set to embark on your Git journey! Each section of this tutorial builds upon the previous one, so it's recommended to follow along in order for the best learning experience. 📈
+## 📄 License
 
-**Regards,**
-**Muhammad Hashim** 👨‍💻
+📜 Licensed under the **MIT License** – see [LICENSE](LICENSE).
+
+---
+
+## 🌟 Support
+
+**If you like this project:**
+
+<p align="center">
+  <a href="https://github.com/HashimThePassionate/learn-git-mastery/stargazers">
+    <img src="https://img.shields.io/badge/⭐-Star_this_repo-orange?style=for-the-badge&logo=github"/>
+  </a>
+  <a href="https://github.com/HashimThePassionate/learn-git-mastery/fork">
+    <img src="https://img.shields.io/badge/🍴-Fork_this_repo-blue?style=for-the-badge&logo=git"/>
+  </a>
+</p>
+
+---
+
+<p align="center">
+  <b>“From Git Beginner ➝ to Git Mastery”</b>
+</p>
